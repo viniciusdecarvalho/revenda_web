@@ -1,0 +1,13 @@
+@CHARSET "UTF-8";
+
+/*
+	Bootstrap override css styles
+*/
+.page-header {
+	margin: 10px 0 10px !important
+}
+
+#page-wrapper {
+  	padding: 0 15px !important;
+}
+
