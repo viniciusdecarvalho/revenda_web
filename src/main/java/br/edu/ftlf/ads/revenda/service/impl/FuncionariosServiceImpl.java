@@ -9,7 +9,6 @@ import javax.inject.Inject;
 
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Restrictions;
 
 import br.edu.ftlf.ads.revenda.dao.HibernateDaoImpl;
 import br.edu.ftlf.ads.revenda.model.Funcionario;

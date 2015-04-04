@@ -48,7 +48,7 @@
 					
 					<div class="dataTable_wrapper">						
 						<div class="col-lg-12 tooltip-demo">
-					    	<a 	href="${linkTo[AquisicoesController].formAquisicao()}" class="btn btn-success" data-toggle="tooltip" title="${t['aquisicao.adiciona']}"><i class="fa fa-plus"></i></a>
+					    	<a 	href="${linkTo[AquisicoesController].aquisicao()}" class="btn btn-success" data-toggle="tooltip" title="${t['aquisicao.adiciona']}"><i class="fa fa-plus"></i></a>
 					    	<strong>${t['aquisicao.cadastro'].count(aquisicoes.size())}</strong>
 						</div>
 						
@@ -75,7 +75,7 @@
 										<td class="valor-pedido">${l[aquisicao.valorPedido].pattern("#,##0.00")}</td>
 								    	<td class="actions">
 											<div class="tooltip-demo">
-								    			<a href="${linkTo[AquisicoesController].formAquisicao(aquisicao.id)}" class="btn btn-default btn-xs" data-toggle="tooltip" data-placement="bottom" title="${t['aquisicao.edita']}"><i class="fa fa-edit"></i></a>
+								    			<a href="${linkTo[AquisicoesController].aquisicao(aquisicao.id)}" class="btn btn-default btn-xs" data-toggle="tooltip" data-placement="bottom" title="${t['aquisicao.edita']}"><i class="fa fa-edit"></i></a>
 											</div>								    		
 								    	</td>
 								  	</tr>

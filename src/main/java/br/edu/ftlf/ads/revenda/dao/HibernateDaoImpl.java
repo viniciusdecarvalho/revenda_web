@@ -4,7 +4,6 @@ import static org.hibernate.criterion.MatchMode.EXACT;
 import static org.hibernate.criterion.MatchMode.START;
 
 import java.lang.reflect.ParameterizedType;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -17,7 +16,6 @@ import org.hibernate.criterion.Example;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.SimpleExpression;
 
 import br.edu.ftlf.ads.revenda.model.Model;
 
@@ -118,10 +116,8 @@ public abstract class HibernateDaoImpl<T extends Model>
 		return session.createCriteria(modelClass);
 	}
 
-	public Criteria getCachedCriteria(SimpleExpression... expressions) {
-		Criteria criteria = getCriteria().setCacheable(true);
-		Arrays.stream(expressions).forEach(criteria::add);
-		return criteria;
+	public Criteria getCachedCriteria() {
+		return getCriteria().setCacheable(true);		
 	}
 	
 	public DetachedCriteria getDetachedCriteria() {

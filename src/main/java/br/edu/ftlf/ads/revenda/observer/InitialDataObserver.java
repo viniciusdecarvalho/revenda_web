@@ -39,7 +39,7 @@ public class InitialDataObserver {
 			admin.setLogin("admin");
 			admin.setSenha("admin");
 			admin.setAtivo(true);
-			admin.setCpf("00000000000");
+			admin.setCpf("000.000.000-00");
 			admin.setGerente(true);
 			admin.setNome("Administrador");
 
