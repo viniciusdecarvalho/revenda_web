@@ -45,6 +45,11 @@
 			<artifactId>hibernate-entitymanager</artifactId>
 			<version>4.3.0.Final</version>
 		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-c3p0</artifactId>
+			<version>4.3.8.Final</version>
+		</dependency>
 
 		<dependency>
 		  <groupId>br.com.caelum.vraptor</groupId>
@@ -57,13 +62,18 @@
 		    <artifactId>caelum-stella-core</artifactId>
 		    <version>2.1.2</version>
 		</dependency>
-		
+		<!-- 
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>5.1.25</version>
 		</dependency>
-				
+		 -->
+		<dependency>
+			<groupId>postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>9.1-901.jdbc4</version>
+		</dependency>
 		<dependency>
 			<groupId>org.hsqldb</groupId>
 			<artifactId>hsqldb</artifactId>
