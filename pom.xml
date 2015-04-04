@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>br.edu.ftlf.ads</groupId>
-	<artifactId>revenda</artifactId>
+	<artifactId>revendaveiculos</artifactId>
 	<version>1.0.0</version>
 	<packaging>war</packaging>
 
@@ -155,7 +155,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>revenda_web</finalName>
+		<finalName>revendaveiculos</finalName>
 		<outputDirectory>${basedir}/src/main/webapp/WEB-INF/classes</outputDirectory>
 		<plugins>
 			<plugin>
@@ -274,5 +274,5 @@
 		</plugins>
 	</build>
 
-	<name>revenda</name>
+	<name>revendaveiculos</name>
 </project>
