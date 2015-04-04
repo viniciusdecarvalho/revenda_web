@@ -1,0 +1,247 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is JAX-WS RI 2.2.8 svn-revision#13980. --><xs:schema xmlns:tns="http://webservice.revenda.ads.ftlf.edu.br/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://webservice.revenda.ads.ftlf.edu.br/">
+
+<xs:element name="deletarCliente" type="tns:deletarCliente"/>
+
+<xs:element name="deletarClienteResponse" type="tns:deletarClienteResponse"/>
+
+<xs:element name="listarClientes" type="tns:listarClientes"/>
+
+<xs:element name="listarClientesResponse" type="tns:listarClientesResponse"/>
+
+<xs:element name="listarFornecedores" type="tns:listarFornecedores"/>
+
+<xs:element name="listarFornecedoresResponse" type="tns:listarFornecedoresResponse"/>
+
+<xs:element name="listarVeiculos" type="tns:listarVeiculos"/>
+
+<xs:element name="listarVeiculosResponse" type="tns:listarVeiculosResponse"/>
+
+<xs:element name="login" type="tns:login"/>
+
+<xs:element name="loginResponse" type="tns:loginResponse"/>
+
+<xs:element name="salvarCliente" type="tns:salvarCliente"/>
+
+<xs:element name="salvarClienteResponse" type="tns:salvarClienteResponse"/>
+
+<xs:element name="usuario" nillable="true" type="tns:usuario"/>
+
+<xs:complexType name="listarVeiculos">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="usuario">
+<xs:sequence>
+<xs:element name="login" type="xs:string"/>
+<xs:element name="senha" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="listarVeiculosResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:listarVeiculosRetorno" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="listarVeiculosRetorno">
+<xs:sequence>
+<xs:element name="errors" minOccurs="0">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="errors" type="tns:error" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="result" type="tns:veiculoDto" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="success" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="error" final="extension restriction">
+<xs:sequence>
+<xs:element name="property" type="xs:string" minOccurs="0"/>
+<xs:element name="message" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="veiculoDto">
+<xs:complexContent>
+<xs:extension base="tns:dto">
+<xs:sequence>
+<xs:element name="id" type="xs:int" minOccurs="0"/>
+<xs:element name="ano" type="xs:string"/>
+<xs:element name="chassi" type="xs:string"/>
+<xs:element name="especie" type="xs:string"/>
+<xs:element name="marca" type="xs:string"/>
+<xs:element name="modelo" type="xs:string"/>
+<xs:element name="placa" type="xs:string"/>
+<xs:element name="renavan" type="xs:string"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="dto" abstract="true">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="salvarCliente">
+<xs:sequence>
+<xs:element name="cliente" type="tns:clienteDto" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="clienteDto">
+<xs:complexContent>
+<xs:extension base="tns:dto">
+<xs:sequence>
+<xs:element name="id" type="xs:int" minOccurs="0"/>
+<xs:element name="cpfCnpj" type="xs:string"/>
+<xs:element name="razaoSocial" type="xs:string"/>
+<xs:element name="ativo" type="xs:boolean"/>
+<xs:element name="celular" type="xs:string" minOccurs="0"/>
+<xs:element name="cep" type="xs:string" minOccurs="0"/>
+<xs:element name="cidade" type="xs:string" minOccurs="0"/>
+<xs:element name="complemento" type="xs:string" minOccurs="0"/>
+<xs:element name="email" type="xs:string" minOccurs="0"/>
+<xs:element name="estado" type="xs:string" minOccurs="0"/>
+<xs:element name="fone" type="xs:string" minOccurs="0"/>
+<xs:element name="logradouro" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="salvarClienteResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:salvarClienteRetorno" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="salvarClienteRetorno">
+<xs:sequence>
+<xs:element name="errors" minOccurs="0">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="errors" type="tns:error" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="result" type="tns:clienteDto" minOccurs="0"/>
+<xs:element name="success" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="deletarCliente">
+<xs:sequence>
+<xs:element name="id" type="xs:int" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="deletarClienteResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:deletarClienteRetorno" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="deletarClienteRetorno">
+<xs:sequence>
+<xs:element name="errors" minOccurs="0">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="errors" type="tns:error" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="result" type="xs:boolean" minOccurs="0"/>
+<xs:element name="success" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="login">
+<xs:sequence>
+<xs:element name="usuario" type="tns:usuario" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="loginResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:loginRetorno" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="loginRetorno">
+<xs:sequence>
+<xs:element name="errors" minOccurs="0">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="error" type="tns:error" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="result" type="xs:boolean" minOccurs="0"/>
+<xs:element name="success" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="listarFornecedores">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="listarFornecedoresResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:listarFornecedoresRetorno" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="listarFornecedoresRetorno">
+<xs:sequence>
+<xs:element name="errors" minOccurs="0">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="errors" type="tns:error" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="result" type="tns:fornecedorDto" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="success" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="fornecedorDto">
+<xs:complexContent>
+<xs:extension base="tns:dto">
+<xs:sequence>
+<xs:element name="id" type="xs:int" minOccurs="0"/>
+<xs:element name="ativo" type="xs:boolean"/>
+<xs:element name="cpfCnpj" type="xs:string"/>
+<xs:element name="razaoSocial" type="xs:string"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="listarClientes">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="listarClientesResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:listarClientesRetorno" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="listarClientesRetorno">
+<xs:sequence>
+<xs:element name="errors" minOccurs="0">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="errors" type="tns:error" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="result" type="tns:clienteDto" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="success" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

@@ -4,10 +4,3 @@ out
 .settings
 .metadata
 target
-*.class
-.classpath
-.project
-.settings
-target
-bin
-eclipsesettings
