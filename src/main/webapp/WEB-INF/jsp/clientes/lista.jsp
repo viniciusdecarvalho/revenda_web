@@ -1,4 +1,4 @@
-<%@ include file="/partial/header.jsp" %>
+<%@ include file="/WEB-INF/partial/header.jsp" %>
 
 	<style type="text/css">
 		th.razaoSocial {
@@ -89,4 +89,4 @@
 			</div>				
 		</div>
 	</div>
-<%@ include file="/partial/footer.jsp" %>
+<%@ include file="/WEB-INF/partial/footer.jsp" %>
