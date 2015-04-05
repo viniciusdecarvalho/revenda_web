@@ -2,7 +2,6 @@ package br.edu.ftlf.ads.revenda.model;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,7 +9,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -49,18 +48,14 @@ public class Pagamento extends Model {
 	@Column(nullable=false, precision=10, scale=2)
 	private BigDecimal valor;
 
-	@OneToMany(mappedBy="pagamento")
-	private List<Gasto> gastos;
+	@OneToOne(mappedBy="pagamento")
+	private Gasto gasto;
 
 	@ManyToOne
 	@JoinColumn(name="formaPagamentoId", nullable=false)
 	private FormaPagamento formaspagamento;
 
 	public Pagamento() {
-	}
-
-	public Pagamento(Integer id) {
-		setId(id);
 	}
 
 	public Date getData() {
@@ -101,6 +96,15 @@ public class Pagamento extends Model {
 
 	public void setFormaspagamento(FormaPagamento formaspagamento) {
 		this.formaspagamento = formaspagamento;
+	}
+	
+	public Gasto getGastos() {
+		return gasto;
+	}
+	
+	public void setGastos(Gasto gasto) {
+		gasto.setPagamento(this);
+		this.gasto = gasto;
 	}
 
 }

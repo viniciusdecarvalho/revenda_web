@@ -6,6 +6,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -36,7 +37,7 @@ public class Gasto extends Model {
 	private Fornecedor fornecedor;
 
 	@NotNull
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name="pagamentoId", nullable=false)
 	private Pagamento pagamento;
 	
@@ -77,6 +78,7 @@ public class Gasto extends Model {
 	}
 
 	public void setPagamento(Pagamento pagamento) {
+		pagamento.setGastos(this);
 		this.pagamento = pagamento;
 	}
 	

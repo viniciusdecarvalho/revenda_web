@@ -36,7 +36,7 @@ public class ClientesController {
 	
 	@Transactional
 	@IncludeParameters
-	@Post("clientes/salva")
+	@Post
 	public void salva(Cliente cliente) {
 		validator.validate(cliente)
 				 .onErrorUsePageOf(this).form();
@@ -58,7 +58,7 @@ public class ClientesController {
 
 	@Transactional
 	@IncludeParameters
-	@Post("clientes/deleta/{id}")
+	@Post("clientes/deleta")
 	public void deleta(Cliente cliente) {
 		clientesService.delete(cliente);
 		result.include("notice", "Cliente removido com sucesso.")

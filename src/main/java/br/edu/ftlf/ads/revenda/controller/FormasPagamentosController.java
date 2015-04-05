@@ -58,7 +58,7 @@ public class FormasPagamentosController {
 
 	@Transactional
 	@IncludeParameters
-	@Post("formaPagamentos/deleta/{id}")
+	@Post("formaPagamentos/deleta")
 	public void deleta(FormaPagamento formaPagamento) {
 		formaPagamentosService.delete(formaPagamento);
 		result.include("notice", "FormaPagamento removido com sucesso.")

@@ -1,4 +1,4 @@
-<%@ include file="/WEB-INF/partial/header.jsp" %>
+<%@ include file="/WEB-INF/partial/_header.jsp" %>
 
 	<style type="text/css">
 		th.nome {
@@ -75,4 +75,4 @@
 			</div>				
 		</div>
 	</div>	
-<%@ include file="/WEB-INF/partial/footer.jsp" %>
+<%@ include file="/WEB-INF/partial/_footer.jsp" %>

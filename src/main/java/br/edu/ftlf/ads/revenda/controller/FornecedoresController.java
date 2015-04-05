@@ -58,7 +58,7 @@ public class FornecedoresController {
 
 	@Transactional
 	@IncludeParameters
-	@Post("fornecedors/deleta/{id}")
+	@Post("fornecedors/deleta")
 	public void deleta(Fornecedor fornecedor) {
 		fornecedoresService.delete(fornecedor);
 		result.include("notice", "Fornecedor removido com sucesso.")

@@ -58,7 +58,7 @@ public class VeiculosController {
 
 	@Transactional
 	@IncludeParameters
-	@Post("veiculos/deleta/{id}")
+	@Post("veiculos/deleta")
 	public void deleta(Veiculo veiculo) {
 		veiculosService.delete(veiculo);
 		result.include("notice", "Veiculo removido com sucesso.")

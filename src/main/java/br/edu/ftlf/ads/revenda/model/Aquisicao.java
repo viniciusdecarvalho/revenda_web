@@ -3,6 +3,7 @@ package br.edu.ftlf.ads.revenda.model;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,6 +20,8 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
+
+import com.google.common.base.Objects;
 
 import br.edu.ftlf.ads.revenda.model.Enums.SituacaoAquisicao;
 import br.edu.ftlf.ads.revenda.model.Enums.SituacaoGasto;
@@ -57,7 +60,7 @@ public class Aquisicao extends Model {
 
 	@Min(0)
 	@Column(nullable=false)
-	private int km;
+	private long km;
 
 	@Lob
 	private String obs;
@@ -140,11 +143,11 @@ public class Aquisicao extends Model {
 		this.data = data;
 	}
 
-	public int getKm() {
+	public long getKm() {
 		return this.km;
 	}
 
-	public void setKm(int km) {
+	public void setKm(long km) {
 		this.km = km;
 	}
 
@@ -189,6 +192,9 @@ public class Aquisicao extends Model {
 	}
 	
 	public BigDecimal getCusto() {
+		if (getGastos().isEmpty()) {
+			return BigDecimal.ZERO;
+		}
 		return getGastos().stream().map(g -> g.getPagamento().getValor())
 								   .reduce(BigDecimal.ZERO, BigDecimal::add);
 	}
@@ -278,4 +284,25 @@ public class Aquisicao extends Model {
 		});
 	}
 
+	@Override
+	public String toString() {
+		return Objects.toStringHelper(this)
+				.add("veiculo", veiculo)
+				.add("uf", uf)
+				.add("cidade", cidade)
+				.add("cor", cor)
+				.add("combustivel", combustivel)
+				.add("km", km)
+				.add("cliente", cliente)
+				.add("vendedor", funcionario)
+				.add("valorComissao", valorComissao)
+				.add("data", data)
+				.add("valor", valor)
+				.add("valorPedido", valorPedido)
+				.add("obs", obs)
+				.add("pagamentos", gastos == null ? null : gastos.stream().map(Gasto::getPagamento).collect(Collectors.toList()))
+				.add("situacao", situacao).omitNullValues().toString();
+	}
+
+	
 }

@@ -1,11 +1,10 @@
-<%@ include file="/WEB-INF/partial/header.jsp" %>
+<%@ include file="/WEB-INF/partial/_header.jsp" %>
 	<div class="row">
 	    <div class="col-lg-12">
 	        <h1 class="page-header">${empty cliente.id ? t['cliente.adiciona'] : t['cliente.edita']}</h1>
 	    </div>
 	    <!-- /.col-lg-12 -->
 	</div>
-	
 	
 	<!-- /.row -->
 	<div class="row">
@@ -118,4 +117,4 @@
 	</div>
 	<!-- /.row -->
 	
-<%@ include file="/WEB-INF/partial/footer.jsp" %>
+<%@ include file="/WEB-INF/partial/_footer.jsp" %>

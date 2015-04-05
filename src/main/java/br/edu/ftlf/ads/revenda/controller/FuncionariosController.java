@@ -60,7 +60,7 @@ public class FuncionariosController {
 
 	@Transactional
 	@IncludeParameters
-	@Post("funcionarios/deleta/{id}")
+	@Post("funcionarios/deleta")
 	public void deleta(Funcionario funcionario) {
 		funcionarios.delete(funcionario);
 		result.include("notice", "Funcionario removido com sucesso.")
@@ -82,7 +82,7 @@ public class FuncionariosController {
 		result.include("funcionarios", funcionarios.list());
 	}
 	
-	@Get("funcionarios/{id}/editaUsuario")
+	@Get("funcionarios/{id}/editaLogin")
 	public void editaUsuario(Integer id) {
 		Funcionario funcionario = funcionarios.find(id);
 		result.include("funcionario", funcionario);
@@ -90,7 +90,7 @@ public class FuncionariosController {
 	
 	@Transactional
 	@IncludeParameters
-	@Post("funcionarios/{id}/salvaUsuario")
+	@Post("funcionarios/{id}/salvaLogin")
 	public void salvaUsuario(Integer id, Usuario usuario) {
 		validator.validate(usuario);
 		validator.onErrorUsePageOf(this).editaUsuario(id);

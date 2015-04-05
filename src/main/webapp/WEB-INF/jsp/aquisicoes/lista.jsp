@@ -1,4 +1,4 @@
-<%@ include file="/WEB-INF/partial/header.jsp" %>
+<%@ include file="/WEB-INF/partial/_header.jsp" %>
 
 	<style type="text/css">
 		th.data {
@@ -48,7 +48,7 @@
 					
 					<div class="dataTable_wrapper">						
 						<div class="col-lg-12 tooltip-demo">
-					    	<a 	href="${linkTo[AquisicoesController].aquisicao()}" class="btn btn-success" data-toggle="tooltip" title="${t['aquisicao.adiciona']}"><i class="fa fa-plus"></i></a>
+					    	<a href="${linkTo[AquisicoesController].veiculo}" class="btn btn-success" data-toggle="tooltip" title="${t['aquisicao.adiciona']}"><i class="fa fa-plus"></i></a>
 					    	<strong>${t['aquisicao.cadastro'].count(aquisicoes.size())}</strong>
 						</div>
 						
@@ -89,4 +89,4 @@
 			</div>				
 		</div>
 	</div>
-<%@ include file="/WEB-INF/partial/footer.jsp" %>
+<%@ include file="/WEB-INF/partial/_footer.jsp" %>

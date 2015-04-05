@@ -1,4 +1,4 @@
-<%@ include file="/WEB-INF/partial/header.jsp" %>
+<%@ include file="/WEB-INF/partial/_header.jsp" %>
 	<div class="row">
 	    <div class="col-lg-12">
 	        <h1 class="page-header">${empty funcionario.senha ? t['funcionario.senha.define'] : t['funcionario.senha.redefine']}</h1>
@@ -73,4 +73,4 @@
 	</div>
 	<!-- /.row -->
 	
-<%@ include file="/WEB-INF/partial/footer.jsp" %>
+<%@ include file="/WEB-INF/partial/_footer.jsp" %>
