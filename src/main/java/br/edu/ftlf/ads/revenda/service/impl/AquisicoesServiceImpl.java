@@ -10,6 +10,7 @@ import org.hibernate.criterion.Order;
 
 import br.edu.ftlf.ads.revenda.dao.HibernateDaoImpl;
 import br.edu.ftlf.ads.revenda.model.Aquisicao;
+import br.edu.ftlf.ads.revenda.model.Pagamento;
 import br.edu.ftlf.ads.revenda.service.AquisicoesService;
 
 @RequestScoped
@@ -35,6 +36,15 @@ public class AquisicoesServiceImpl extends HibernateDaoImpl<Aquisicao> implement
 				//.setFetchMode("veiculo", FetchMode.JOIN)
 				//.setFetchMode("gasto", FetchMode.JOIN)
 				.list();
+	}
+	
+	@Override
+	public void save(Aquisicao model) {
+		super.save(model);
+		List<Pagamento> pagamentos = model.getPagamentos();
+		for (Pagamento pagamento : pagamentos) {
+			getSession().persist(pagamento);
+		}
 	}
 	
 }

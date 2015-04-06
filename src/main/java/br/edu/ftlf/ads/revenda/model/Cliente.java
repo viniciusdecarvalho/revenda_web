@@ -163,14 +163,10 @@ public class Cliente extends Model {
 		result = prime * result
 				+ ((aquisicoes == null) ? 0 : aquisicoes.hashCode());
 		result = prime * result + (ativo ? 1231 : 1237);
-		result = prime * result + ((contato == null) ? 0 : contato.hashCode());
 		result = prime * result + ((cpfCnpj == null) ? 0 : cpfCnpj.hashCode());
-		result = prime * result
-				+ ((endereco == null) ? 0 : endereco.hashCode());
 		result = prime * result
 				+ ((razaoSocial == null) ? 0 : razaoSocial.hashCode());
 		result = prime * result + ((tipo == null) ? 0 : tipo.hashCode());
-		result = prime * result + ((vendas == null) ? 0 : vendas.hashCode());
 		return result;
 	}
 

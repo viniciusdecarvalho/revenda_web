@@ -1,7 +1,6 @@
 package br.edu.ftlf.ads.revenda.model;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,10 +8,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
@@ -29,11 +25,6 @@ import br.edu.ftlf.ads.revenda.model.Enums.TipoPagamento;
 public class Pagamento extends Model {
 	private static final long serialVersionUID = 1L;
 
-	@NotNull
-	@Temporal(TemporalType.DATE)
-	@Column(nullable=false)
-	private Date data;
-
 	@NotEmpty
 	@Column(nullable=false)
 	private String descricao;
@@ -48,22 +39,16 @@ public class Pagamento extends Model {
 	@Column(nullable=false, precision=10, scale=2)
 	private BigDecimal valor;
 
-	@OneToOne(mappedBy="pagamento")
-	private Gasto gasto;
-
 	@ManyToOne
 	@JoinColumn(name="formaPagamentoId", nullable=false)
-	private FormaPagamento formaspagamento;
+	private FormaPagamento formaPagamento;
+	
+	@NotNull
+	@ManyToOne
+	@JoinColumn(name="aquisicaoId", nullable=false)
+	private Aquisicao aquisicao;
 
 	public Pagamento() {
-	}
-
-	public Date getData() {
-		return this.data;
-	}
-
-	public void setData(Date data) {
-		this.data = data;
 	}
 
 	public String getDescricao() {
@@ -90,21 +75,20 @@ public class Pagamento extends Model {
 		this.valor = valor;
 	}
 
-	public FormaPagamento getFormaspagamento() {
-		return this.formaspagamento;
+	public FormaPagamento getFormaPagamento() {
+		return this.formaPagamento;
 	}
 
-	public void setFormaspagamento(FormaPagamento formaspagamento) {
-		this.formaspagamento = formaspagamento;
+	public void setFormaPagamento(FormaPagamento formaPagamento) {
+		this.formaPagamento = formaPagamento;
 	}
 	
-	public Gasto getGastos() {
-		return gasto;
+	public Aquisicao getAquisicao() {
+		return aquisicao;
 	}
 	
-	public void setGastos(Gasto gasto) {
-		gasto.setPagamento(this);
-		this.gasto = gasto;
+	public void setAquisicao(Aquisicao aquisicao) {
+		this.aquisicao = aquisicao;
 	}
-
+	
 }

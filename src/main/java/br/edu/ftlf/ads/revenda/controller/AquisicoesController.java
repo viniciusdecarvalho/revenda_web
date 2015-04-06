@@ -1,15 +1,9 @@
 package br.edu.ftlf.ads.revenda.controller;
 
-import java.io.Serializable;
 import java.util.List;
 
-import javax.enterprise.context.Conversation;
-import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Get;
@@ -18,8 +12,10 @@ import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.interceptor.IncludeParameters;
 import br.com.caelum.vraptor.validator.I18nMessage;
 import br.com.caelum.vraptor.validator.Validator;
+import br.edu.ftlf.ads.revenda.conversation.Compra;
 import br.edu.ftlf.ads.revenda.model.Aquisicao;
 import br.edu.ftlf.ads.revenda.model.Aquisicao.Combustivel;
+import br.edu.ftlf.ads.revenda.model.Enums.SituacaoAquisicao;
 import br.edu.ftlf.ads.revenda.model.Enums.TipoPagamento;
 import br.edu.ftlf.ads.revenda.model.Gasto;
 import br.edu.ftlf.ads.revenda.model.Pagamento;
@@ -32,17 +28,9 @@ import br.edu.ftlf.ads.revenda.view.ClienteModelView;
 import br.edu.ftlf.ads.revenda.view.CompraModelView;
 import br.edu.ftlf.ads.revenda.view.VeiculoModelView;
 
-import com.google.common.base.Function;
-import com.google.common.collect.Lists;
-
-@ConversationScoped
 @Controller
-public class AquisicoesController implements Serializable {
+public class AquisicoesController {
 
-	private static final long serialVersionUID = 3470424643529821249L;
-
-	private Logger logger = LoggerFactory.getLogger(AquisicoesController.class);
-	
 	private final Result result;
 	private final Validator validator;
 	
@@ -52,15 +40,14 @@ public class AquisicoesController implements Serializable {
 	private final VeiculosService veiculosService;
 	private final FormasPagamentosService formasPagamentosService;
 	
-	private final Conversation conversation;
-	private final AquisicaoConversation aquisicaoConversation;
+	private final Compra compra;
 	
 	/**
 	 * cdi eyes 
 	 * @deprecated 
 	 */
 	protected AquisicoesController() {
-		this(null, null, null, null, null, null, null, null, null);
+		this(null, null, null, null, null, null, null, null);
 	}
 	
 	@Inject
@@ -70,8 +57,7 @@ public class AquisicoesController implements Serializable {
 								ClientesService clientesService, 
 								VeiculosService veiculosService, 
 								FormasPagamentosService formasPagamentosService,
-								Conversation conversation, 
-								AquisicaoConversation aquisicaoConversation) {
+								Compra aquisicaoConversation) {
 		this.result = result;
 		this.validator = validator;
 		this.aquisicoesService = aquisicoesService;
@@ -79,178 +65,129 @@ public class AquisicoesController implements Serializable {
 		this.clientesService = clientesService;
 		this.veiculosService = veiculosService;
 		this.formasPagamentosService = formasPagamentosService;
-		
-		this.conversation = conversation;
-		this.aquisicaoConversation = aquisicaoConversation;
+		this.compra = aquisicaoConversation;
 	}
 	
 	@Get("aquisicao/veiculo")
 	public void veiculo() {
-		beginConversation();
-		conversation(new Aquisicao());
+		compra.beginConversation();		
 		result.include("veiculos", veiculosService.list());
 		result.include("combustiveis", Combustivel.values());
 	}
-
-	private void conversation(Aquisicao aquisicao) {
-		String conversationId = conversation.getId();
-		long timeout = conversation.getTimeout();
-		result.include("conversation", conversation);
-		result.include("cid", conversationId);
-		aquisicaoConversation.setAquisicao(aquisicao);
-		result.include("aquisicao", aquisicao);
-		logger.info("{} continuing conversation with id: {} -> aquisicao {}", timeout, conversationId, aquisicao);
-	}
-	
-	private void conversation() {
-		conversation(aquisicaoConversation.getAquisicao());
-	}
-
-	private void beginConversation() {
-		if (conversation.isTransient()) {
-			conversation.begin();
-		}
-		String conversationId = conversation.getId();
-		result.include("cid", conversationId);
-		logger.info("begin conversation with id: {}", conversationId);
-	}
-	
-	private void endConversation() {
-		if (!conversation.isTransient()) {
-			logger.info("conversation ended with id: {}", conversation.getId());
-			conversation.end();
-		}
-	}
-	
+		
 	@IncludeParameters
 	@Post("aquisicao/veiculo")
 	public void veiculo(VeiculoModelView veiculo) {
-		Aquisicao aquisicao = aquisicaoConversation.getAquisicao();
+		compra.registerConversation();
 		validator.validate(veiculo);
 		if (validator.hasErrors()) {
 			result.include("veiculos", veiculosService.list());
 			result.include("combustiveis", Combustivel.values());
 			validator.onErrorUsePageOf(this).veiculo();
 		}
-		aquisicaoConversation.setVeiculo(veiculo);	
-		conversation(aquisicao);
-		result.redirectTo(this).cliente();
+		compra.setVeiculo(veiculo);
+		
+		result.include("clientes", clientesService.list());
+		result.include("vendedores", funcionariosService.getVendedores());
+		result.of(this).cliente();
 	}
 	
 	@Get("aquisicao/cliente")
 	public void cliente() {
+		compra.registerConversation();
 		result.include("clientes", clientesService.list());
 		result.include("vendedores", funcionariosService.getVendedores());
-		conversation();
 	}
 	
 	@IncludeParameters
 	@Post("aquisicao/cliente")
 	public void cliente(ClienteModelView cliente) {
-		Aquisicao aquisicao = aquisicaoConversation.getAquisicao();
-		validator.validate(cliente).onErrorUsePageOf(this).cliente();
+		compra.registerConversation();
+		validator.validate(cliente);
 		if (validator.hasErrors()) {
 			result.include("clientes", clientesService.list());
 			result.include("vendedores", funcionariosService.getVendedores());
 			validator.onErrorUsePageOf(this).cliente();
 		}
-		aquisicaoConversation.setCliente(cliente);
-		conversation(aquisicao);
-		result.redirectTo(this).compra();
+		compra.setCliente(cliente);
+		result.of(this).compra();
 	}
 	
 	@Get("aquisicao/compra")
-	public void compra() {		
-		conversation();
+	public void compra() {	
+		compra.registerConversation();
 	}
 	
 	@IncludeParameters
 	@Post("aquisicao/compra")
 	public void compra(CompraModelView compra) {
-		Aquisicao aquisicao = aquisicaoConversation.getAquisicao();
-		validator.validate(compra).onErrorUsePageOf(this).compra();
-		aquisicaoConversation.setCompra(compra);
-		conversation(aquisicao);
-		result.redirectTo(this).pagamentos();
+		validator.validate(compra)
+				 .onErrorUsePageOf(this).compra();
+		
+		this.compra.setCompra(compra);
+		this.compra.registerConversation();
+		
+		result.include("formasPagamentos", formasPagamentosService.list());
+		result.of(this).pagamentos();
 	}
 	
 	@Get("aquisicao/pagamentos")
-	public void pagamentos() {
-		Aquisicao aquisicao = aquisicaoConversation.getAquisicao();
-		List<Pagamento> pagamentos = Lists.transform(aquisicao.getGastos(), new Function<Gasto, Pagamento>() {
-			@Override
-			public Pagamento apply(Gasto gasto) {
-				return gasto.getPagamento();
-			}
-		});
-		conversation(aquisicao);
-		result.include("pagamentos", pagamentos);
-	}
-	
-	@Get("aquisicao/{id}/pagamento")
-	public void pagamento() {
-		conversation();
-		aquisicaoPagamento(new Pagamento());
-	}
-	
-	@Get("aquisicao/{aquisicao.id}/pagamento/{pagamento.id}")
-	public void pagamento(Pagamento pagamento) {
-		conversation();
-		aquisicaoPagamento(pagamento);
-	}
-	
-	private void aquisicaoPagamento(Pagamento pagamento) {
-		result.include("pagamento", pagamento);
+	public void pagamentos() {		
+		compra.registerConversation();
 		result.include("formasPagamentos", formasPagamentosService.list());
-		Aquisicao aquisicao = aquisicaoConversation.getAquisicao();
-		conversation(aquisicao);
 	}
-
+	
 	@IncludeParameters
 	@Post("aquisicao/{aquisicao.id}/pagamento/salva")
 	public void salvaPagamento(Pagamento pagamento) {
+		compra.registerConversation();
 		
-		Aquisicao aquisicao = aquisicaoConversation.getAquisicao();
-		
-		pagamento.setDescricao("COMPRA DO VEICULO " + aquisicao.getVeiculo());
 		pagamento.setTipo(TipoPagamento.DEBITO);
+		Integer formaPagamentoId = pagamento.getFormaPagamento().getId();
+		pagamento.setFormaPagamento(formasPagamentosService.find(formaPagamentoId));
+		pagamento.setAquisicao(compra.getAquisicao());
 		
+		result.include("formasPagamentos", formasPagamentosService.list());
 		validator.validate(pagamento)
 				 .onErrorUsePageOf(this).pagamentos();
 		
+		Aquisicao aquisicao = compra.getAquisicao();
+		aquisicao.addPagamento(pagamento);
 		
-		Gasto gasto = new Gasto();
-		gasto.setPagamento(pagamento);
-		aquisicao.addGasto(gasto);
-		
-		conversation(aquisicao);
-		
-		result.include("aquisicao", aquisicao)	
-			  .redirectTo(this).pagamentos();
+		result.of(this).pagamentos();
 	}
-	
+
 	@Transactional
-	@IncludeParameters
 	@Post
 	public void salva() {
-		Aquisicao aquisicao = aquisicaoConversation.getAquisicao();
+		compra.registerConversation();
+		
+		Aquisicao aquisicao = compra.getAquisicao();
+		aquisicao.setSituacao(SituacaoAquisicao.OK);
 		
 		validator.validate(aquisicao);
 		
-		validator.addIf(hasGastos(aquisicao), new I18nMessage("pagamento", "aquisicao.pagamentos.not.empty"));
-		validator.addIf(validaPagamento(aquisicao), new I18nMessage("valor", "aquisicao.pagamentos.not.valid", aquisicao.getCusto(), aquisicao.getValor()));
+//		validator.addIf(!hasGastos(aquisicao), new I18nMessage("pagamento", "aquisicao.pagamentos.not.empty"));
+		validator.addIf(validaPagamento(aquisicao), new I18nMessage("valor", "aquisicao.pagamentos.not.valid", aquisicao.getCustoTotal(), aquisicao.getValor()));
 		
 		if (validator.hasErrors()) {
-			formAquisicaoIncludes();
-			validator.onErrorUsePageOf(this).compra();			
+			result.include("formasPagamentos", formasPagamentosService.list());
+			validator.onErrorUsePageOf(this).pagamentos();			
 		}				 
 		
 		aquisicoesService.save(aquisicao);
+		compra.endConversation();
 		result.include("notice", "Aquisicao salvo com sucesso.");
-		
-		endConversation();
-		
 		result.redirectTo(this).lista();
+	}
+	
+	@Get("aquisicao/removePagamento/{index}")
+	public void removePagamento(Integer index) {
+		List<Pagamento> pagamentos = compra.getAquisicao().getPagamentos();
+		pagamentos.remove(index);
+		result.include("notice", "pagamento removido com sucesso.");
+		result.include("formasPagamentos", formasPagamentosService.list());
+		result.of(this).pagamentos();
 	}
 
 	private boolean hasGastos(Aquisicao aquisicao) {
@@ -260,34 +197,22 @@ public class AquisicoesController implements Serializable {
 	}
 	
 	private boolean validaPagamento(Aquisicao aquisicao) {
-		if (aquisicao.getGastos() != null && !aquisicao.getGastos().isEmpty()) {
-			double pagamentos = aquisicao.getCusto().doubleValue();
+		if (aquisicao.getPagamentos() != null && !aquisicao.getPagamentos().isEmpty()) {
+			double pagamentos = aquisicao.getCustoTotal().doubleValue();
 			double valor = aquisicao.getValor() != null ? aquisicao.getValor().doubleValue() : 0;
 			return pagamentos < valor;
 		}
 		return false;
 	}
 
-	private void formulario(Aquisicao aquisicao) {
-		formAquisicaoIncludes();
-		result.include("aquisicao", aquisicao);
-	}
-
-	private void formAquisicaoIncludes() {
-		result.include("combustiveis", Combustivel.values());
-		result.include("vendedores", funcionariosService.getVendedores());
-		result.include("veiculos", veiculosService.list());
-		result.include("clientes", clientesService.list());
-	}
-	
-	@Get("aquisicao/{id}")
-	public void aquisicao(Integer id) {
-		formulario(aquisicoesService.find(id));
-	}
-	
 	@Get("aquisicoes")
 	public void lista() {
 		result.include("aquisicoes", aquisicoesService.list());
+	}
+	
+	@Get("aquisicao/{id}")
+	public void deleta(Integer id) {
+		result.include("aquisicao", aquisicoesService.find(id));
 	}
 	
 }

@@ -71,11 +71,11 @@
 										<td class="veiculo">${aquisicao.veiculo}</td>
 										<td class="cliente">${aquisicao.cliente}</td>
 								    	<td class="valor-compra">${l[aquisicao.valor].pattern("#,##0.00")}</td>
-										<td class="valor-custo">${l[aquisicao.custo].pattern("#,##0.00")}</td>
+										<td class="valor-custo">${l[aquisicao.custoTotal].pattern("#,##0.00")}</td>
 										<td class="valor-pedido">${l[aquisicao.valorPedido].pattern("#,##0.00")}</td>
 								    	<td class="actions">
 											<div class="tooltip-demo">
-								    			<a href="${linkTo[AquisicoesController].aquisicao(aquisicao.id)}" class="btn btn-default btn-xs" data-toggle="tooltip" data-placement="bottom" title="${t['aquisicao.edita']}"><i class="fa fa-edit"></i></a>
+								    			<%--<a href="${linkTo[AquisicoesController].aquisicao(aquisicao.id)}" class="btn btn-default btn-xs" data-toggle="tooltip" data-placement="bottom" title="${t['aquisicao.edita']}"><i class="fa fa-edit"></i></a> --%>
 											</div>								    		
 								    	</td>
 								  	</tr>

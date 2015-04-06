@@ -3,7 +3,6 @@ package br.edu.ftlf.ads.revenda.model;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,16 +15,16 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-import com.google.common.base.Objects;
-
 import br.edu.ftlf.ads.revenda.model.Enums.SituacaoAquisicao;
-import br.edu.ftlf.ads.revenda.model.Enums.SituacaoGasto;
-import br.edu.ftlf.ads.revenda.model.Enums.TipoGasto;
+
+import com.google.common.base.Objects;
+import com.google.common.collect.Lists;
 
 /**
  * The persistent class for the aquisicoes database table.
@@ -99,8 +98,9 @@ public class Aquisicao extends Model {
 	@JoinColumn(name="veiculoId", nullable=false)
 	private Veiculo veiculo;
 
+	@NotEmpty
 	@OneToMany(mappedBy="aquisicao")
-	private List<AquisicaoPagamento> aquisicoesPagamentos;
+	private List<Pagamento> pagamentos;
 
 	@OneToMany(mappedBy="aquisicao")
 	private List<Gasto> gastos;
@@ -109,6 +109,8 @@ public class Aquisicao extends Model {
 	private SituacaoAquisicao situacao;
 
 	public Aquisicao() {
+		pagamentos = Lists.newArrayList();
+		gastos = Lists.newArrayList();
 	}
 
 	public String getCidade() {
@@ -191,12 +193,25 @@ public class Aquisicao extends Model {
 		this.valorPedido = valorPedido;
 	}
 	
-	public BigDecimal getCusto() {
+	@Transient
+	public BigDecimal getTotalPagamentos() {
+		if (getPagamentos().isEmpty()) {
+			return BigDecimal.ZERO;
+		}
+		return getPagamentos().stream().map(Pagamento::getValor).reduce(BigDecimal.ZERO, BigDecimal::add);
+	}
+	
+	@Transient
+	public BigDecimal getTotalGastos() {
 		if (getGastos().isEmpty()) {
 			return BigDecimal.ZERO;
 		}
-		return getGastos().stream().map(g -> g.getPagamento().getValor())
-								   .reduce(BigDecimal.ZERO, BigDecimal::add);
+		return getGastos().stream().map(Gasto::getValor).reduce(BigDecimal.ZERO, BigDecimal::add);
+	}
+	
+	@Transient
+	public BigDecimal getCustoTotal() {
+		return getTotalPagamentos().add(getTotalGastos());
 	}
 	
 	public Cliente getCliente() {
@@ -231,36 +246,36 @@ public class Aquisicao extends Model {
 		this.situacao = situacao;
 	}
 
-	public List<AquisicaoPagamento> getAquisicoesPagamentos() {
-		return this.aquisicoesPagamentos;
+	public List<Pagamento> getPagamentos() {
+		return this.pagamentos;
 	}
 
-	public void setAquisicoesPagamentos(List<AquisicaoPagamento> aquisicoesPagamentos) {
-		this.aquisicoesPagamentos = aquisicoesPagamentos;
+	public void setPagamentos(List<Pagamento> pagamentos) {
+		this.pagamentos = pagamentos;
 	}
 
-	public AquisicaoPagamento addAquisicoesPagamento(AquisicaoPagamento aquisicoesPagamento) {
-		getAquisicoesPagamentos().add(aquisicoesPagamento);
-		aquisicoesPagamento.setAquisicao(this);
+	public Pagamento addPagamento(Pagamento pagamento) {
+		getPagamentos().add(pagamento);
+		pagamento.setAquisicao(this);
 
-		return aquisicoesPagamento;
+		return pagamento;
 	}
 
-	public AquisicaoPagamento removeAquisicoesPagamento(AquisicaoPagamento aquisicoesPagamento) {
-		getAquisicoesPagamentos().remove(aquisicoesPagamento);
-		aquisicoesPagamento.setAquisicao(null);
+	public Pagamento removePagamento(Pagamento pagamento) {
+		getPagamentos().remove(pagamento);
+		pagamento.setAquisicao(null);
 
-		return aquisicoesPagamento;
+		return pagamento;
 	}
-
+	
 	public List<Gasto> getGastos() {
-		return this.gastos;
+		return gastos;
 	}
-
+	
 	public void setGastos(List<Gasto> gastos) {
 		this.gastos = gastos;
 	}
-
+	
 	public Gasto addGasto(Gasto gasto) {
 		getGastos().add(gasto);
 		gasto.setAquisicao(this);
@@ -277,11 +292,6 @@ public class Aquisicao extends Model {
 	
 	public void cancelar() {
 		situacao = Enums.SituacaoAquisicao.CANCELADO;
-		getGastos().forEach(g -> {
-			if (TipoGasto.AQUISICAO.equals(g.getSituacao())) {
-				g.setSituacao(SituacaoGasto.CANCELADO);
-			}
-		});
 	}
 
 	@Override
@@ -300,7 +310,7 @@ public class Aquisicao extends Model {
 				.add("valor", valor)
 				.add("valorPedido", valorPedido)
 				.add("obs", obs)
-				.add("pagamentos", gastos == null ? null : gastos.stream().map(Gasto::getPagamento).collect(Collectors.toList()))
+				.add("pagamentos", pagamentos)
 				.add("situacao", situacao).omitNullValues().toString();
 	}
 

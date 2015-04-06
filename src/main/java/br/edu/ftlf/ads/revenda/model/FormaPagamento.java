@@ -33,15 +33,8 @@ public class FormaPagamento extends Model {
 	@Column(nullable=false)
 	private String nome;
 
-	@OneToMany(mappedBy="formaspagamento")
+	@OneToMany(mappedBy="formaPagamento")
 	private List<Pagamento> pagamentos;
-
-	public FormaPagamento() {
-	}
-
-	public FormaPagamento(Integer id) {
-		setId(id);
-	}
 
 	public boolean isAtivo() {
 		return this.ativo;
@@ -85,14 +78,14 @@ public class FormaPagamento extends Model {
 
 	public Pagamento addPagamento(Pagamento pagamento) {
 		getPagamentos().add(pagamento);
-		pagamento.setFormaspagamento(this);
+		pagamento.setFormaPagamento(this);
 
 		return pagamento;
 	}
 
 	public Pagamento removePagamento(Pagamento pagamento) {
 		getPagamentos().remove(pagamento);
-		pagamento.setFormaspagamento(null);
+		pagamento.setFormaPagamento(null);
 
 		return pagamento;
 	}

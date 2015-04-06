@@ -12,6 +12,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<vraptor.version>4.1.4</vraptor.version>
 		<weld.version>2.1.2.Final</weld.version>
+		<wildfly.version>8.2.0.Final</wildfly.version>
 	</properties>
 
 	<dependencies>
@@ -159,27 +160,31 @@
 		<outputDirectory>${basedir}/src/main/webapp/WEB-INF/classes</outputDirectory>
 		<plugins>
 			<plugin>
-	            <groupId>org.apache.maven.plugins</groupId>
-	            <artifactId>maven-dependency-plugin</artifactId>
-	            <version>2.3</version>
-	            <executions>
-	                <execution>
-	                    <phase>package</phase>
-	                    <goals><goal>copy</goal></goals>
-	                    <configuration>
-	                        <artifactItems>
-	                            <artifactItem>
-	                                <groupId>com.github.jsimone</groupId>
-	                                <artifactId>webapp-runner</artifactId>
-	                                <version>7.0.22</version>
-	                                <destFileName>webapp-runner.jar</destFileName>
-	                            </artifactItem>
-	                        </artifactItems>
-	                    </configuration>
-	                </execution>
-	            </executions>
-	        </plugin>
-		
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>2.10</version>
+				<executions>
+			    	<execution>
+				      	<id>unpack</id>
+				      	<phase>package</phase>
+				      	<goals>
+					        <goal>unpack</goal>
+				      	</goals>
+				      	<configuration>
+				        	<artifactItems>
+				          		<artifactItem>
+						            <groupId>org.wildfly</groupId>
+						            <artifactId>wildfly-dist</artifactId>
+						            <version>${wildfly.version}</version>
+						            <type>zip</type>
+						            <overWrite>false</overWrite>
+						            <outputDirectory>target</outputDirectory>
+				          		</artifactItem>
+				        	</artifactItems>
+				      	</configuration>
+			    	</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -189,11 +194,15 @@
 					<target>1.8</target>
 				</configuration>
 			</plugin>
-			
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-war-plugin</artifactId>
-				<version>2.5</version>
+			  	<groupId>org.apache.maven.plugins</groupId>
+			  	<artifactId>maven-war-plugin</artifactId>
+			  	<version>2.5</version>
+			  	<configuration>
+			    	<failOnMissingWebXml>false</failOnMissingWebXml>
+			    	<outputDirectory>target/wildfly-${wildfly.version}/standalone/deployments</outputDirectory>
+			    	<warName>ROOT</warName>
+			  	</configuration>
 			</plugin>
 			
 			<plugin>
