@@ -17,7 +17,6 @@ import br.edu.ftlf.ads.revenda.model.Aquisicao;
 import br.edu.ftlf.ads.revenda.model.Aquisicao.Combustivel;
 import br.edu.ftlf.ads.revenda.model.Enums.SituacaoAquisicao;
 import br.edu.ftlf.ads.revenda.model.Enums.TipoPagamento;
-import br.edu.ftlf.ads.revenda.model.Gasto;
 import br.edu.ftlf.ads.revenda.model.Pagamento;
 import br.edu.ftlf.ads.revenda.service.AquisicoesService;
 import br.edu.ftlf.ads.revenda.service.ClientesService;
@@ -190,12 +189,6 @@ public class AquisicoesController {
 		result.of(this).pagamentos();
 	}
 
-	private boolean hasGastos(Aquisicao aquisicao) {
-		List<Gasto> gastos = aquisicao.getGastos();
-		boolean empty = gastos == null || gastos.isEmpty();
-		return !empty;
-	}
-	
 	private boolean validaPagamento(Aquisicao aquisicao) {
 		if (aquisicao.getPagamentos() != null && !aquisicao.getPagamentos().isEmpty()) {
 			double pagamentos = aquisicao.getCustoTotal().doubleValue();
