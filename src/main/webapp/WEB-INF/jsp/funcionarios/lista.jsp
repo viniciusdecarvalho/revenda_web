@@ -62,7 +62,7 @@
 											<div class="tooltip-demo">								    			
 								    			<a href="${linkTo[FuncionariosController].form(funcionario.id)}" class="btn btn-default btn-xs" data-toggle="tooltip" data-placement="bottom" title="${t['funcionario.edita'] }"><i class="fa fa-edit"></i></a>
 								    			<a href="${linkTo[FuncionariosController].deleta(funcionario.id)}" class="btn btn-danger btn-xs" data-toggle="tooltip" data-placement="bottom" title="${t['funcionario.deleta'] }"><i class="fa fa-ban"></i></a>
-								    			<a href="${linkTo[FuncionariosController].editaUsuario(funcionario.id)}" class="btn btn-primary btn-xs" data-toggle="tooltip" data-placement="bottom" title="${empty funcionario.senha ? t['funcionario.senha.define'] : t['funcionario.senha.redefine'] }"><i class="fa fa-retweet"></i></a>
+<%-- 								    			<a href="${linkTo[FuncionariosController].editaUsuario(funcionario.id)}" class="btn btn-primary btn-xs" data-toggle="tooltip" data-placement="bottom" title="${empty funcionario.senha ? t['funcionario.senha.define'] : t['funcionario.senha.redefine'] }"><i class="fa fa-retweet"></i></a> --%>
 											</div>								    		
 								    	</td>
 								  	</tr>

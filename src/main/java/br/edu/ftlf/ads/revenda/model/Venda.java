@@ -4,70 +4,47 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+import com.google.common.collect.Lists;
+
 import br.edu.ftlf.ads.revenda.model.Enums.SituacaoVenda;
 import br.edu.ftlf.ads.revenda.model.Enums.TipoGasto;
 
-/**
- * The persistent class for the vendas database table.
- * 
- */
-@Entity
-@Table(name="vendas")
 public class Venda extends Model {
 	private static final long serialVersionUID = 1L;
 
-	@OneToMany(mappedBy="venda")
-	private List<VendaPagamento> vendasPagamentos;
 
 	@NotNull
 	@Future
-	@Temporal(TemporalType.DATE)
-	@Column(nullable=false)
 	private Date data;
 	
-	@Lob
 	private String obs;
 	
 	@NotNull
 	@Min(0)
-	@Column(nullable=false, precision=10, scale=2)
 	private BigDecimal valor;
 	
 	@Min(0)
-	@Column(precision=10, scale=2)
 	private BigDecimal valorComissao;
 	
 	@NotNull
-	@ManyToOne
-	@JoinColumn(name="aquisicaoId", nullable=false)
 	private Aquisicao aquisicao;
 	
 	@NotNull
-	@ManyToOne
-	@JoinColumn(name="clienteId", nullable=false)
 	private Cliente cliente;
 	
 	@NotNull
-	@ManyToOne
-	@JoinColumn(name="funcionarioId", nullable=false)
 	private Funcionario funcionario;
 	
 	private SituacaoVenda situacao;
 	
+	private List<Pagamento> pagamentos;
+	
 	public Venda() {
+		pagamentos = Lists.newArrayList();
 	}
 
 	public Date getData() {
@@ -134,26 +111,33 @@ public class Venda extends Model {
 		this.funcionario = funcionario;
 	}
 
-	public List<VendaPagamento> getVendasPagamentos() {
-		return this.vendasPagamentos;
+	public List<Pagamento> getPagamentos() {
+		return this.pagamentos;
 	}
 
-	public void setVendasPagamentos(List<VendaPagamento> vendasPagamentos) {
-		this.vendasPagamentos = vendasPagamentos;
+	public void setPagamentos(List<Pagamento> pagamentos) {
+		this.pagamentos = pagamentos;
 	}
 
-	public VendaPagamento addVendasPagamento(VendaPagamento vendasPagamento) {
-		getVendasPagamentos().add(vendasPagamento);
-		vendasPagamento.setVenda(this);
+	public Pagamento addPagamento(Pagamento pagamento) {
+		getPagamentos().add(pagamento);
+		pagamento.setAquisicao(this.getAquisicao());
 
-		return vendasPagamento;
+		return pagamento;
 	}
 
-	public VendaPagamento removeVendasPagamento(VendaPagamento vendasPagamento) {
-		getVendasPagamentos().remove(vendasPagamento);
-		vendasPagamento.setVenda(null);
+	public Pagamento removePagamento(Pagamento pagamento) {
+		getPagamentos().remove(pagamento);
+		pagamento.setAquisicao(null);
 
-		return vendasPagamento;
+		return pagamento;
+	}
+
+	public BigDecimal getLucro() {
+		BigDecimal valorCompra = aquisicao.getValor();
+		BigDecimal valorGastos = aquisicao.getGastos().stream().map(Gasto::getValor).reduce(BigDecimal.ZERO, BigDecimal::add);
+		BigDecimal valorVenda = getValor();
+		return valorVenda.subtract(valorCompra.add(valorGastos));
 	}
 	
 	public void cancelar() {
@@ -163,6 +147,10 @@ public class Venda extends Model {
 				g.cancelar();
 			}
 		});
+	}
+
+	public BigDecimal getCustoTotal() {
+		return getPagamentos().stream().map(Pagamento::getValor).reduce(BigDecimal.ZERO, BigDecimal::add);
 	}
 
 }

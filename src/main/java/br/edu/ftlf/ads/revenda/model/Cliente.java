@@ -2,54 +2,32 @@ package br.edu.ftlf.ads.revenda.model;
 
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Transient;
-
 import org.hibernate.validator.constraints.NotEmpty;
 
-/**
- * The persistent class for the clientes database table.
- * 
- */
-@Entity
-@Table(name="clientes")
 public class Cliente extends Model {
 	private static final long serialVersionUID = 1L;
 
 	public static final String PROPERTY_RAZAOSOCIAL = "razaoSocial";
 	public static final String PROPERTY_CPFCNPJ = "cpfCnpj";
 	
-	@Column(nullable=false)
 	private boolean ativo;
 
-	@Embedded
 	private Endereco endereco = new Endereco();
 	
-	@Embedded
 	private Contato contato = new Contato();
 	
 	@NotEmpty
-//	@CpfCnpj
-	@Column(nullable=false)
 	private String cpfCnpj;
 	
 	public enum Tipo{FISICA, JURIDICA}
 	
-	@Transient
 	private Tipo tipo = Tipo.FISICA;
 
 	@NotEmpty
-	@Column(nullable=false)
 	private String razaoSocial;
 
-	@OneToMany(mappedBy="cliente")
 	private List<Aquisicao> aquisicoes;
 
-	@OneToMany(mappedBy="cliente")
 	private List<Venda> vendas;
 
 	public Cliente() {

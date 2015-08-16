@@ -74,7 +74,7 @@
 									</c:choose>
 								    	<td class="razaoSocial">${cliente.razaoSocial}</td>
 								    	<td class="cpfCnpj">${cliente.cpfCnpj}</td>
-								    	<td class="fone">${cliente.fone}  ${cliente.celular}</td>
+								    	<td class="fone">${empty cliente.fone ? '' : cliente.fone}  ${empty cliente.celular ? '' : cliente.celular}</td>
 								    	<td class="actions">
 											<div class="tooltip-demo">
 								    			<a href="${linkTo[ClientesController].detalhes(cliente.id)}" class="btn btn-info btn-xs" data-toggle="tooltip" data-placement="bottom" title="Detalhes do Cliente"><i class="fa fa-list"></i></a>

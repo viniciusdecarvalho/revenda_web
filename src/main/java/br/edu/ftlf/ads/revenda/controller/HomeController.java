@@ -12,16 +12,16 @@ import br.com.caelum.vraptor.interceptor.IncludeParameters;
 import br.com.caelum.vraptor.validator.Message;
 import br.com.caelum.vraptor.validator.SimpleMessage;
 import br.com.caelum.vraptor.validator.Validator;
+import br.edu.ftlf.ads.revenda.dao.FuncionariosDao;
 import br.edu.ftlf.ads.revenda.interceptor.Public;
 import br.edu.ftlf.ads.revenda.interceptor.UserInfo;
-import br.edu.ftlf.ads.revenda.model.Usuario;
-import br.edu.ftlf.ads.revenda.service.FuncionariosService;
+import br.edu.ftlf.ads.revenda.model.UsuarioWeb;
 
 @Controller
 public class HomeController {
 
 	private Result result;
-	private FuncionariosService funcionarios;
+	private FuncionariosDao funcionariosDao;
 	private UserInfo info;
 	private Validator validator;
 	
@@ -33,10 +33,10 @@ public class HomeController {
 	}
 	
 	@Inject
-	public HomeController(Result result, Validator validator, FuncionariosService funcionarios, UserInfo info) {
+	public HomeController(Result result, Validator validator, FuncionariosDao funcionarios, UserInfo info) {
 		this.result = result;
 		this.validator = validator;
-		this.funcionarios = funcionarios;
+		this.funcionariosDao = funcionarios;
 		this.info = info;
 	}
 	
@@ -50,12 +50,12 @@ public class HomeController {
 	@IncludeParameters
 	@Public
 	@Post("/login")
-	public void login(Usuario usuario) {
+	public void login(UsuarioWeb usuario) {
 
 		validator.validate(usuario)
 				 .onErrorUsePageOf(this).login();
 				 
-		boolean contains = funcionarios.contains(usuario);
+		boolean contains = funcionariosDao.contains(usuario);
 		if (contains) {
 			info.setUsuario(usuario);
 			result.redirectTo(this).home();

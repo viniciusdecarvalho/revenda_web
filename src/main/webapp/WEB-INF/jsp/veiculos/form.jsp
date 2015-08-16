@@ -20,7 +20,7 @@
 	            <div class="panel-body">
 	                <input type="hidden" name="veiculo.id" value="${veiculo.id }"/>
 	                        	
-                     <div class="form-group">
+                    <div class="form-group">
                          <label>${t['veiculo.placa'] }</label>
                          <input type="text" class="form-control" name="veiculo.placa" value="${veiculo.placa}" autofocus />
                    	</div>

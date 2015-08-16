@@ -4,13 +4,11 @@
 	     <div class="row">
 		 	<div class="col-md-6 col-md-offset-2">
             	<div class="panel-body">
-            		<div class="alert alert-info alert-dismissable">
-              			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-              			<div class="alert alert-success alert-dismissable">
-              				<i class="fa fa-info"></i>
-             				${notice}
-             			</div>
-              		</div>
+           			<div class="alert alert-success alert-dismissable">
+           				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+           				<i class="fa fa-info"></i>
+          				${notice}
+          			</div>
                 </div>
         	</div>
     	</div> 

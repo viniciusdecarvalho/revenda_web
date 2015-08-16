@@ -1,9 +1,5 @@
 package br.edu.ftlf.ads.revenda.model;
 
-import javax.persistence.Embeddable;
-
-
-@Embeddable
 public class Contato {
 
 	private String celular;

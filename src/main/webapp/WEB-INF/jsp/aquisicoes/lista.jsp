@@ -59,23 +59,23 @@
 								    <th class="veiculo">${t['aquisicao.coluna.veiculo']}</th>
 								    <th class="cliente">${t['aquisicao.coluna.cliente']}</th>
 								    <th class="valorcompra">${t['aquisicao.coluna.valor.compra']}</th>
-								    <th class="valorcusto">${t['aquisicao.coluna.valor.custo']}</th>
+<%-- 								    <th class="valorcusto">${t['aquisicao.coluna.valor.custo']}</th> --%>
 								    <th class="valorpedido">${t['aquisicao.coluna.valor.pedido']}</th>								    
 								    <th class="actions"></th>
 							  	</tr>
 						  	</thead>
 						  	<tbody>
 								<c:forEach items="${aquisicoes}" var="aquisicao">
-									<tr>
+									<tr>										
 										<td class="data">${l[aquisicao.data].format('short')}</td>
-										<td class="veiculo">${aquisicao.veiculo}</td>
-										<td class="cliente">${aquisicao.cliente}</td>
+										<td class="veiculo">${aquisicao.veiculo.placa}</td>
+										<td class="cliente">${aquisicao.cliente.razaoSocial}</td>
 								    	<td class="valor-compra">${l[aquisicao.valor].pattern("#,##0.00")}</td>
-										<td class="valor-custo">${l[aquisicao.custoTotal].pattern("#,##0.00")}</td>
+<%-- 										<td class="valor-custo">${l[aquisicao.custoTotal].pattern("#,##0.00")}</td> --%>
 										<td class="valor-pedido">${l[aquisicao.valorPedido].pattern("#,##0.00")}</td>
 								    	<td class="actions">
 											<div class="tooltip-demo">
-								    			<%--<a href="${linkTo[AquisicoesController].aquisicao(aquisicao.id)}" class="btn btn-default btn-xs" data-toggle="tooltip" data-placement="bottom" title="${t['aquisicao.edita']}"><i class="fa fa-edit"></i></a> --%>
+								    			<a href="${linkTo[AquisicoesController].detalhes(aquisicao.id)}" class="btn btn-default btn-xs" data-toggle="tooltip" data-placement="bottom" title="${t['aquisicao.detalhe']}"><i class="fa fa-edit"></i></a>
 											</div>								    		
 								    	</td>
 								  	</tr>

@@ -4,18 +4,6 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
@@ -26,12 +14,6 @@ import br.edu.ftlf.ads.revenda.model.Enums.SituacaoAquisicao;
 import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 
-/**
- * The persistent class for the aquisicoes database table.
- * 
- */
-@Entity
-@Table(name="aquisicoes")
 public class Aquisicao extends Model {
 	private static final long serialVersionUID = 1L;
 
@@ -40,72 +22,51 @@ public class Aquisicao extends Model {
 	public enum Combustivel { GASOLINA, ALCOOL, DIESEL, FLEX, GAS_NATURAL }
 	
 	@NotNull
-	@Column(nullable=false)
 	private String cidade;
 
 	@NotNull
-	@Column(nullable=false)
-	@Enumerated(EnumType.ORDINAL)
 	private Combustivel combustivel;
 
 	@NotNull
-	@Column(nullable=false)
 	private String cor;
 
 	@NotNull
-	@Temporal(TemporalType.DATE)
-	@Column(nullable=false)
 	private Date data;
 
 	@Min(0)
-	@Column(nullable=false)
 	private long km;
 
-	@Lob
 	private String obs;
 
 	@NotEmpty
-	@Column(nullable=false, length=2)
 	private String uf;
 
 	@NotNull
 	@Min(0)
-	@Column(nullable=false, precision=10, scale=2)
 	private BigDecimal valor;
 	
 	@NotNull
 	@Min(0)
-	@Column(precision=10, scale=2)
 	private BigDecimal valorComissao;
 
 	@NotNull
 	@Min(0)
-	@Column(nullable=false, precision=10, scale=2)
 	private BigDecimal valorPedido;
 
 	@NotNull
-	@ManyToOne
-	@JoinColumn(name="clienteId", nullable=false)
 	private Cliente cliente;
 
 	@NotNull
-	@ManyToOne
-	@JoinColumn(name="vendedorId", nullable=false)
 	private Funcionario funcionario;
 
 	@NotNull
-	@ManyToOne
-	@JoinColumn(name="veiculoId", nullable=false)
 	private Veiculo veiculo;
 
 	@NotEmpty
-	@OneToMany(mappedBy="aquisicao")
 	private List<Pagamento> pagamentos;
 
-	@OneToMany(mappedBy="aquisicao")
 	private List<Gasto> gastos;
 
-	@Column(name="situacao")
 	private SituacaoAquisicao situacao;
 
 	public Aquisicao() {
@@ -193,7 +154,6 @@ public class Aquisicao extends Model {
 		this.valorPedido = valorPedido;
 	}
 	
-	@Transient
 	public BigDecimal getTotalPagamentos() {
 		if (getPagamentos().isEmpty()) {
 			return BigDecimal.ZERO;
@@ -201,7 +161,6 @@ public class Aquisicao extends Model {
 		return getPagamentos().stream().map(Pagamento::getValor).reduce(BigDecimal.ZERO, BigDecimal::add);
 	}
 	
-	@Transient
 	public BigDecimal getTotalGastos() {
 		if (getGastos().isEmpty()) {
 			return BigDecimal.ZERO;
@@ -209,7 +168,6 @@ public class Aquisicao extends Model {
 		return getGastos().stream().map(Gasto::getValor).reduce(BigDecimal.ZERO, BigDecimal::add);
 	}
 	
-	@Transient
 	public BigDecimal getCustoTotal() {
 		return getTotalPagamentos().add(getTotalGastos());
 	}

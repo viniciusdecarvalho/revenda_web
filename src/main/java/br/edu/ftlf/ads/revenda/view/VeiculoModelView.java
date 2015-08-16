@@ -25,7 +25,7 @@ public class VeiculoModelView {
 	private Combustivel combustivel;
 	
 	@NotNull
-	private Long km;	
+	private long km;	
 	
 	public Veiculo getVeiculo() {
 		return veiculo;
@@ -67,11 +67,11 @@ public class VeiculoModelView {
 		this.combustivel = combustivel;
 	}
 
-	public Long getKm() {
+	public long getKm() {
 		return km;
 	}
 
-	public void setKm(Long km) {
+	public void setKm(long km) {
 		this.km = km;
 	}
 	

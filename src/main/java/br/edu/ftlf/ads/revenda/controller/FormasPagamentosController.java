@@ -9,15 +9,15 @@ import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.interceptor.IncludeParameters;
 import br.com.caelum.vraptor.validator.Validator;
+import br.edu.ftlf.ads.revenda.dao.FormasPagamentosDao;
 import br.edu.ftlf.ads.revenda.model.FormaPagamento;
-import br.edu.ftlf.ads.revenda.service.FormasPagamentosService;
 
 @Controller
 public class FormasPagamentosController {
 
 	private final Result result;
 	private final Validator validator;
-	private final FormasPagamentosService formaPagamentosService;
+	private final FormasPagamentosDao formaPagamentosDao;
 	
 	/**
 	 * cdi eyes 
@@ -28,10 +28,10 @@ public class FormasPagamentosController {
 	}
 	
 	@Inject
-	public FormasPagamentosController(Result result, Validator validator, FormasPagamentosService formaPagamentosService) {
+	public FormasPagamentosController(Result result, Validator validator, FormasPagamentosDao formaPagamentosService) {
 		this.result = result;
 		this.validator = validator;
-		this.formaPagamentosService = formaPagamentosService;
+		this.formaPagamentosDao = formaPagamentosService;
 	}
 	
 	@Transactional
@@ -41,26 +41,26 @@ public class FormasPagamentosController {
 		validator.validate(formaPagamento)
 				 .onErrorUsePageOf(this).form();
 		
-		formaPagamentosService.save(formaPagamento);
+		formaPagamentosDao.save(formaPagamento);
 		result.include("notice", "FormaPagamento salvo com sucesso.");
 		result.redirectTo(this).lista();
 	}
 	
 	@Get("formaPagamentos/detalhes/{id}")
 	public void detalhes(Integer id) {
-		result.include("formaPagamento", formaPagamentosService.find(id));
+		result.include("formaPagamento", formaPagamentosDao.find(id));
 	}
 
 	@Get("formaPagamentos/deleta/{id}")
 	public void deleta(Integer id) {
-		result.include("formaPagamento", formaPagamentosService.find(id));
+		result.include("formaPagamento", formaPagamentosDao.find(id));
 	}
 
 	@Transactional
 	@IncludeParameters
 	@Post("formaPagamentos/deleta")
 	public void deleta(FormaPagamento formaPagamento) {
-		formaPagamentosService.delete(formaPagamento);
+		formaPagamentosDao.delete(formaPagamento);
 		result.include("notice", "FormaPagamento removido com sucesso.")
 			  .redirectTo(this).lista();
 	}
@@ -72,12 +72,12 @@ public class FormasPagamentosController {
 	
 	@Get("formaPagamentos/form/{id}")
 	public void form(Integer id) {
-		result.include("formaPagamento", formaPagamentosService.find(id));
+		result.include("formaPagamento", formaPagamentosDao.find(id));
 	}
 	
 	@Get
 	public void lista() {
-		result.include("formaPagamentos", formaPagamentosService.list());
+		result.include("formaPagamentos", formaPagamentosDao.list());
 	}
 	
 }

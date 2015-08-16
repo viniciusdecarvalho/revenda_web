@@ -73,10 +73,10 @@
 								    	<td class="cpfCnpj">${cliente.cpfCnpj}</td>
 								    	<td class="fone">${cliente.contato.fone}  ${cliente.contato.celular}</td>
 								    	<td class="actions">
-											<div class="tooltip-demo">
+ 											<div class="tooltip-demo">
 								    			<a href="${linkTo[ClientesController].form(cliente.id)}" class="btn btn-default btn-xs" data-toggle="tooltip" data-placement="bottom" title="${t['cliente.edita'] }"><i class="fa fa-edit"></i></a>
 								    			<a href="${linkTo[ClientesController].deleta(cliente.id)}" class="btn btn-danger btn-xs" data-toggle="tooltip" data-placement="bottom" title="${t['cliente.deleta'] }"><i class="fa fa-ban"></i></a>
-											</div>								    		
+ 											</div>
 								    	</td>
 								  	</tr>
 								</c:forEach>

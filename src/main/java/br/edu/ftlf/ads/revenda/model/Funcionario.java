@@ -2,20 +2,8 @@ package br.edu.ftlf.ads.revenda.model;
 
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Transient;
-
 import org.hibernate.validator.constraints.NotEmpty;
 
-/**
- * The persistent class for the funcionarios database table.
- * 
- */
-@Entity
-@Table(name="funcionarios")
 public class Funcionario extends Model {
 	private static final long serialVersionUID = 1L;
 
@@ -24,42 +12,30 @@ public class Funcionario extends Model {
 	public static final String PROPERTY_SENHA = "senha";
 	public static final String PROPERTY_VENDEDOR = "vendedor";
 	
-	@Column(nullable=false)
 	private boolean ativo;
 
-	@Column(nullable=false)
 	private boolean gerente;
 		
-	@Column(nullable=false)
 	private boolean normal;
 
-	@Column(nullable=false)
 	private boolean vendedor;
 	
 	@NotEmpty
-	@Column(nullable=false)
 	private String cpf;
 
 	@NotEmpty
-	@Column(nullable=false)
 	private String nome;
 
-	@Column(nullable = true)
 	private String login;
 	
-	@Column(nullable = true)
 	private String senha;	
 	
-	@Column(nullable = false)
 	private boolean redefinirSenha;
 
-	@OneToMany(mappedBy="funcionario")
 	private List<Aquisicao> aquisicoes;
 
-	@OneToMany(mappedBy="funcionario")
 	private List<Venda> vendas;
 	
-	@OneToMany(mappedBy="funcionario")
 	private List<Gasto> gastos;
 	
 	public Funcionario() {
@@ -207,15 +183,13 @@ public class Funcionario extends Model {
 		return gasto;
 	}
 	
-	@Transient
 	public String getTipo() {
 		if (isGerente()) return "Gerente";
 		if (isVendedor()) return "Vendedor";
 		return "Normal";
 	}
 	
-	@Transient
-	public void redefineUsuario(Usuario usuario) {
+	public void redefineUsuario(UsuarioWeb usuario) {
 		setLogin(usuario.getLogin());
 		setSenha(usuario.getSenha());
 		setRedefinirSenha(true);

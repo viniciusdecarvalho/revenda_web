@@ -9,15 +9,15 @@ import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.interceptor.IncludeParameters;
 import br.com.caelum.vraptor.validator.Validator;
+import br.edu.ftlf.ads.revenda.dao.FornecedoresDao;
 import br.edu.ftlf.ads.revenda.model.Fornecedor;
-import br.edu.ftlf.ads.revenda.service.FornecedoresService;
 
 @Controller
 public class FornecedoresController {
 
 	private final Result result;
 	private final Validator validator;
-	private final FornecedoresService fornecedoresService;
+	private final FornecedoresDao fornecedoresDao;
 	
 	/**
 	 * cdi eyes 
@@ -28,10 +28,10 @@ public class FornecedoresController {
 	}
 	
 	@Inject
-	public FornecedoresController(Result result, Validator validator, FornecedoresService fornecedorsService) {
+	public FornecedoresController(Result result, Validator validator, FornecedoresDao fornecedorsService) {
 		this.result = result;
 		this.validator = validator;
-		this.fornecedoresService = fornecedorsService;
+		this.fornecedoresDao = fornecedorsService;
 	}
 	
 	@Transactional
@@ -41,26 +41,26 @@ public class FornecedoresController {
 		validator.validate(fornecedor)
 				 .onErrorUsePageOf(this).form();
 		
-		fornecedoresService.save(fornecedor);
+		fornecedoresDao.save(fornecedor);
 		result.include("notice", "Fornecedor salvo com sucesso.");
 		result.redirectTo(this).lista();
 	}
 	
 	@Get("fornecedors/detalhes/{id}")
 	public void detalhes(Integer id) {
-		result.include("fornecedor", fornecedoresService.find(id));
+		result.include("fornecedor", fornecedoresDao.find(id));
 	}
 
 	@Get("fornecedors/deleta/{id}")
 	public void deleta(Integer id) {
-		result.include("fornecedor", fornecedoresService.find(id));
+		result.include("fornecedor", fornecedoresDao.find(id));
 	}
 
 	@Transactional
 	@IncludeParameters
 	@Post("fornecedors/deleta")
 	public void deleta(Fornecedor fornecedor) {
-		fornecedoresService.delete(fornecedor);
+		fornecedoresDao.delete(fornecedor);
 		result.include("notice", "Fornecedor removido com sucesso.")
 			  .redirectTo(this).lista();
 	}
@@ -72,12 +72,12 @@ public class FornecedoresController {
 	
 	@Get("fornecedors/form/{id}")
 	public void form(Integer id) {
-		result.include("fornecedor", fornecedoresService.find(id));
+		result.include("fornecedor", fornecedoresDao.find(id));
 	}
 	
 	@Get
 	public void lista() {
-		result.include("fornecedores", fornecedoresService.list());
+		result.include("fornecedores", fornecedoresDao.list());
 	}
 	
 }

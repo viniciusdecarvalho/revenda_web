@@ -44,6 +44,7 @@ public class Compra implements Serializable {
 	}
 
 	public void fill(VeiculoModelView modelView) {
+		if (modelView == null) return;
 		aquisicao.setVeiculo(modelView.getVeiculo());
 		aquisicao.setUf(modelView.getUf());
 		aquisicao.setCidade(modelView.getCidade());
@@ -53,12 +54,14 @@ public class Compra implements Serializable {
 	}
 
 	public void fill(ClienteModelView modelView) {
+		if (modelView == null) return;
 		aquisicao.setCliente(modelView.getCliente());
 		aquisicao.setFuncionario(modelView.getVendedor());
 		aquisicao.setValorComissao(modelView.getValorComissao());
 	}
 
 	public void fill(CompraModelView compra) {
+		if (compra == null) return;
 		aquisicao.setData(compra.getData());
 		aquisicao.setValor(compra.getValor());
 		aquisicao.setValorPedido(compra.getValorPedido());

@@ -79,16 +79,16 @@
 	                        <div class="form-inline">
 		                        <div class="form-group">
 	                                <label class="sr-only">${t['cliente.contato.fone']}</label>
-	                                <input type="tel" class="form-control" name="cliente.endereco.fone" value="${cliente.endereco.fone}" disabled/>
+	                                <input type="tel" class="form-control" name="cliente.contato.fone" value="${cliente.contato.fone}" disabled/>
 	                            </div>
 	                            <div class="form-group">
 	                                <label class="sr-only">${t['cliente.contato.celular']}</label>
-	                                <input type="tel" class="form-control" name="cliente.endereco.celular" value="${cliente.endereco.celular}" disabled />
+	                                <input type="tel" class="form-control" name="cliente.contato.celular" value="${cliente.contato.celular}" disabled />
 	                            </div>
 	                        </div>
                             <div class="form-group">
                                 <label>${t['cliente.contato.email']}</label>
-                                <input type="email" class="form-control" name="cliente.endereco.email" value="${cliente.endereco.email}" disabled />
+                                <input type="email" class="form-control" name="cliente.contato.email" value="${cliente.contato.email}" disabled />
                             </div>	                        
 	                    </div>
 	                </div>

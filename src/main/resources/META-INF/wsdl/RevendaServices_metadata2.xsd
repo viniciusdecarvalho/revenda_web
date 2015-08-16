@@ -1,0 +1,592 @@
+<!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is JAX-WS RI 2.2.8 svn-revision#13980. --><xs:schema xmlns:tns="http://webservice.revenda.ads.ftlf.edu.br/" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://webservice.revenda.ads.ftlf.edu.br/" version="1.0">
+  <xs:element name="autentica" type="tns:autentica"></xs:element>
+  <xs:element name="autenticaResponse" type="tns:autenticaResponse"></xs:element>
+  <xs:element name="cancelaAquisicao" type="tns:cancelaAquisicao"></xs:element>
+  <xs:element name="cancelaAquisicaoResponse" type="tns:cancelaAquisicaoResponse"></xs:element>
+  <xs:element name="cancelaVenda" type="tns:cancelaVenda"></xs:element>
+  <xs:element name="cancelaVendaResponse" type="tns:cancelaVendaResponse"></xs:element>
+  <xs:element name="consultaAquisicao" type="tns:consultaAquisicao"></xs:element>
+  <xs:element name="consultaAquisicaoResponse" type="tns:consultaAquisicaoResponse"></xs:element>
+  <xs:element name="consultaAquisicoesPorCliente" type="tns:consultaAquisicoesPorCliente"></xs:element>
+  <xs:element name="consultaAquisicoesPorClienteResponse" type="tns:consultaAquisicoesPorClienteResponse"></xs:element>
+  <xs:element name="consultaCliente" type="tns:consultaCliente"></xs:element>
+  <xs:element name="consultaClienteResponse" type="tns:consultaClienteResponse"></xs:element>
+  <xs:element name="consultaFormaPagamento" type="tns:consultaFormaPagamento"></xs:element>
+  <xs:element name="consultaFormaPagamentoResponse" type="tns:consultaFormaPagamentoResponse"></xs:element>
+  <xs:element name="consultaFornecedor" type="tns:consultaFornecedor"></xs:element>
+  <xs:element name="consultaFornecedorResponse" type="tns:consultaFornecedorResponse"></xs:element>
+  <xs:element name="consultaFuncionario" type="tns:consultaFuncionario"></xs:element>
+  <xs:element name="consultaFuncionarioResponse" type="tns:consultaFuncionarioResponse"></xs:element>
+  <xs:element name="consultaGasto" type="tns:consultaGasto"></xs:element>
+  <xs:element name="consultaGastoResponse" type="tns:consultaGastoResponse"></xs:element>
+  <xs:element name="consultaGastos" type="tns:consultaGastos"></xs:element>
+  <xs:element name="consultaGastosResponse" type="tns:consultaGastosResponse"></xs:element>
+  <xs:element name="consultaVeiculo" type="tns:consultaVeiculo"></xs:element>
+  <xs:element name="consultaVeiculoResponse" type="tns:consultaVeiculoResponse"></xs:element>
+  <xs:element name="consultaVenda" type="tns:consultaVenda"></xs:element>
+  <xs:element name="consultaVendaResponse" type="tns:consultaVendaResponse"></xs:element>
+  <xs:element name="consultaVendasPorCliente" type="tns:consultaVendasPorCliente"></xs:element>
+  <xs:element name="consultaVendasPorClienteResponse" type="tns:consultaVendasPorClienteResponse"></xs:element>
+  <xs:element name="deletaCliente" type="tns:deletaCliente"></xs:element>
+  <xs:element name="deletaClienteResponse" type="tns:deletaClienteResponse"></xs:element>
+  <xs:element name="deletaFormaPagamento" type="tns:deletaFormaPagamento"></xs:element>
+  <xs:element name="deletaFormaPagamentoResponse" type="tns:deletaFormaPagamentoResponse"></xs:element>
+  <xs:element name="deletaFuncionario" type="tns:deletaFuncionario"></xs:element>
+  <xs:element name="deletaFuncionarioResponse" type="tns:deletaFuncionarioResponse"></xs:element>
+  <xs:element name="deletaGasto" type="tns:deletaGasto"></xs:element>
+  <xs:element name="deletaGastoResponse" type="tns:deletaGastoResponse"></xs:element>
+  <xs:element name="deletaVeiculo" type="tns:deletaVeiculo"></xs:element>
+  <xs:element name="deletaVeiculoResponse" type="tns:deletaVeiculoResponse"></xs:element>
+  <xs:element name="deletarFornecedor" type="tns:deletarFornecedor"></xs:element>
+  <xs:element name="deletarFornecedorResponse" type="tns:deletarFornecedorResponse"></xs:element>
+  <xs:element name="listaAquisicoes" type="tns:listaAquisicoes"></xs:element>
+  <xs:element name="listaAquisicoesResponse" type="tns:listaAquisicoesResponse"></xs:element>
+  <xs:element name="listaClientes" type="tns:listaClientes"></xs:element>
+  <xs:element name="listaClientesResponse" type="tns:listaClientesResponse"></xs:element>
+  <xs:element name="listaFormasPagamentos" type="tns:listaFormasPagamentos"></xs:element>
+  <xs:element name="listaFormasPagamentosResponse" type="tns:listaFormasPagamentosResponse"></xs:element>
+  <xs:element name="listaFuncionarios" type="tns:listaFuncionarios"></xs:element>
+  <xs:element name="listaFuncionariosResponse" type="tns:listaFuncionariosResponse"></xs:element>
+  <xs:element name="listaGastos" type="tns:listaGastos"></xs:element>
+  <xs:element name="listaGastosResponse" type="tns:listaGastosResponse"></xs:element>
+  <xs:element name="listaVeiculos" type="tns:listaVeiculos"></xs:element>
+  <xs:element name="listaVeiculosResponse" type="tns:listaVeiculosResponse"></xs:element>
+  <xs:element name="listaVendas" type="tns:listaVendas"></xs:element>
+  <xs:element name="listaVendasResponse" type="tns:listaVendasResponse"></xs:element>
+  <xs:element name="listarFornecedores" type="tns:listarFornecedores"></xs:element>
+  <xs:element name="listarFornecedoresResponse" type="tns:listarFornecedoresResponse"></xs:element>
+  <xs:element name="login" type="tns:login"></xs:element>
+  <xs:element name="loginResponse" type="tns:loginResponse"></xs:element>
+  <xs:element name="salvaAquisicao" type="tns:salvaAquisicao"></xs:element>
+  <xs:element name="salvaAquisicaoResponse" type="tns:salvaAquisicaoResponse"></xs:element>
+  <xs:element name="salvaCliente" type="tns:salvaCliente"></xs:element>
+  <xs:element name="salvaClienteResponse" type="tns:salvaClienteResponse"></xs:element>
+  <xs:element name="salvaFormaPagamento" type="tns:salvaFormaPagamento"></xs:element>
+  <xs:element name="salvaFormaPagamentoResponse" type="tns:salvaFormaPagamentoResponse"></xs:element>
+  <xs:element name="salvaFuncionario" type="tns:salvaFuncionario"></xs:element>
+  <xs:element name="salvaFuncionarioResponse" type="tns:salvaFuncionarioResponse"></xs:element>
+  <xs:element name="salvaGasto" type="tns:salvaGasto"></xs:element>
+  <xs:element name="salvaGastoResponse" type="tns:salvaGastoResponse"></xs:element>
+  <xs:element name="salvaVeiculo" type="tns:salvaVeiculo"></xs:element>
+  <xs:element name="salvaVeiculoResponse" type="tns:salvaVeiculoResponse"></xs:element>
+  <xs:element name="salvaVenda" type="tns:salvaVenda"></xs:element>
+  <xs:element name="salvaVendaResponse" type="tns:salvaVendaResponse"></xs:element>
+  <xs:element name="salvarFornecedor" type="tns:salvarFornecedor"></xs:element>
+  <xs:element name="salvarFornecedorResponse" type="tns:salvarFornecedorResponse"></xs:element>
+  <xs:complexType name="consultaFormaPagamento">
+    <xs:sequence>
+      <xs:element name="id" type="xs:int"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="consultaFormaPagamentoResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:formaPagamentoDto"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="formaPagamentoDto">
+    <xs:complexContent>
+      <xs:extension base="tns:dto">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="id" type="xs:int"></xs:element>
+          <xs:element minOccurs="0" name="nome" type="xs:string"></xs:element>
+          <xs:element name="credito" type="xs:boolean"></xs:element>
+          <xs:element name="debito" type="xs:boolean"></xs:element>
+          <xs:element name="ativo" type="xs:boolean"></xs:element>
+          <xs:element minOccurs="0" name="total" type="xs:decimal"></xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType abstract="true" name="dto">
+    <xs:sequence></xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="deletarFornecedor">
+    <xs:sequence>
+      <xs:element name="id" type="xs:int"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="deletarFornecedorResponse">
+    <xs:sequence></xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="deletaFormaPagamento">
+    <xs:sequence>
+      <xs:element name="id" type="xs:int"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="deletaFormaPagamentoResponse">
+    <xs:sequence></xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="deletaVeiculo">
+    <xs:sequence>
+      <xs:element name="id" type="xs:int"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="deletaVeiculoResponse">
+    <xs:sequence></xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="listaVendas">
+    <xs:sequence>
+      <xs:element name="dataInicial" type="xs:dateTime"></xs:element>
+      <xs:element name="dataFinal" type="xs:dateTime"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="listaVendasResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="venda" type="tns:vendaDto"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="vendaDto">
+    <xs:complexContent>
+      <xs:extension base="tns:dto">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="id" type="xs:int"></xs:element>
+          <xs:element name="data" type="xs:dateTime"></xs:element>
+          <xs:element minOccurs="0" name="obs" type="xs:string"></xs:element>
+          <xs:element name="valor" type="xs:decimal"></xs:element>
+          <xs:element minOccurs="0" name="valorComissao" type="xs:decimal"></xs:element>
+          <xs:element name="aquisicaoId" type="xs:int"></xs:element>
+          <xs:element name="clienteId" type="xs:int"></xs:element>
+          <xs:element name="vendedorId" type="xs:int"></xs:element>
+          <xs:element name="pagamentos">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" name="pagamento" type="tns:pagamentoDto"></xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="pagamentoDto">
+    <xs:complexContent>
+      <xs:extension base="tns:dto">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="id" type="xs:int"></xs:element>
+          <xs:element name="data" type="xs:dateTime"></xs:element>
+          <xs:element name="descricao" type="xs:string"></xs:element>
+          <xs:element name="tipo" type="xs:string"></xs:element>
+          <xs:element name="valor" type="xs:decimal"></xs:element>
+          <xs:element name="formaspagamentoId" type="xs:int"></xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="salvaFormaPagamento">
+    <xs:sequence>
+      <xs:element name="formaPagamento" type="tns:formaPagamentoDto"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="salvaFormaPagamentoResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="formaPagamento" type="tns:formaPagamentoDto"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="listaFuncionarios">
+    <xs:sequence></xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="listaFuncionariosResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="funcionario" type="tns:funcionarioDto"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="funcionarioDto">
+    <xs:complexContent>
+      <xs:extension base="tns:dto">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="id" type="xs:int"></xs:element>
+          <xs:element name="ativo" type="xs:boolean"></xs:element>
+          <xs:element name="gerente" type="xs:boolean"></xs:element>
+          <xs:element name="usuario" type="xs:boolean"></xs:element>
+          <xs:element name="vendedor" type="xs:boolean"></xs:element>
+          <xs:element name="cpf" type="xs:string"></xs:element>
+          <xs:element name="nome" type="xs:string"></xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="deletaGasto">
+    <xs:sequence>
+      <xs:element name="id" type="xs:int"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="deletaGastoResponse">
+    <xs:sequence></xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="consultaVenda">
+    <xs:sequence>
+      <xs:element name="id" type="xs:int"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="consultaVendaResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="venda" type="tns:vendaDto"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="consultaAquisicao">
+    <xs:sequence>
+      <xs:element name="id" type="xs:int"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="consultaAquisicaoResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="aquisicao" type="tns:aquisicaoDto"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="aquisicaoDto">
+    <xs:complexContent>
+      <xs:extension base="tns:dto">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="id" type="xs:int"></xs:element>
+          <xs:element name="cidade" type="xs:string"></xs:element>
+          <xs:element name="combustivel" type="xs:string"></xs:element>
+          <xs:element name="cor" type="xs:string"></xs:element>
+          <xs:element name="data" type="xs:dateTime"></xs:element>
+          <xs:element name="km" type="xs:int"></xs:element>
+          <xs:element minOccurs="0" name="obs" type="xs:string"></xs:element>
+          <xs:element name="uf" type="xs:string"></xs:element>
+          <xs:element name="valor" type="xs:decimal"></xs:element>
+          <xs:element minOccurs="0" name="valorComissao" type="xs:decimal"></xs:element>
+          <xs:element name="valorPedido" type="xs:decimal"></xs:element>
+          <xs:element name="clienteId" type="xs:int"></xs:element>
+          <xs:element name="funcionarioId" type="xs:int"></xs:element>
+          <xs:element name="veiculoId" type="xs:int"></xs:element>
+          <xs:element minOccurs="0" name="situacao" type="tns:situacaoAquisicao"></xs:element>
+          <xs:element name="pagamentos">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" name="pagamento" type="tns:pagamentoDto"></xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="listaGastos">
+    <xs:sequence></xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="listaGastosResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="gasto" type="tns:gastoDto"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="gastoDto">
+    <xs:complexContent>
+      <xs:extension base="tns:dto">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="id" type="xs:int"></xs:element>
+          <xs:element minOccurs="0" name="situacao" type="xs:string"></xs:element>
+          <xs:element name="aquisicaoId" type="xs:int"></xs:element>
+          <xs:element name="fornecedorId" type="xs:int"></xs:element>
+          <xs:element name="pagamento" type="tns:pagamentoDto"></xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="listarFornecedores">
+    <xs:sequence></xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="listarFornecedoresResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="fornecedor" type="tns:fornecedorDto"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="fornecedorDto">
+    <xs:complexContent>
+      <xs:extension base="tns:dto">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="id" type="xs:int"></xs:element>
+          <xs:element name="ativo" type="xs:boolean"></xs:element>
+          <xs:element name="cpfCnpj" type="xs:string"></xs:element>
+          <xs:element name="razaoSocial" type="xs:string"></xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="login">
+    <xs:sequence>
+      <xs:element name="usuario" type="tns:usuario"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="usuario">
+    <xs:sequence>
+      <xs:element name="login" type="xs:string"></xs:element>
+      <xs:element name="senha" type="xs:string"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="loginResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="funcionario" type="tns:funcionarioDto"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="cancelaAquisicao">
+    <xs:sequence>
+      <xs:element name="aquisicao" type="tns:aquisicaoDto"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="cancelaAquisicaoResponse">
+    <xs:sequence></xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="salvaFuncionario">
+    <xs:sequence>
+      <xs:element name="funcionario" type="tns:funcionarioDto"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="salvaFuncionarioResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="funcionario" type="tns:funcionarioDto"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="listaClientes">
+    <xs:sequence></xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="listaClientesResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="cliente" type="tns:clienteDto"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="clienteDto">
+    <xs:complexContent>
+      <xs:extension base="tns:dto">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="id" type="xs:int"></xs:element>
+          <xs:element name="cpfCnpj" type="xs:string"></xs:element>
+          <xs:element name="razaoSocial" type="xs:string"></xs:element>
+          <xs:element name="ativo" type="xs:boolean"></xs:element>
+          <xs:element minOccurs="0" name="celular" type="xs:string"></xs:element>
+          <xs:element minOccurs="0" name="cep" type="xs:string"></xs:element>
+          <xs:element minOccurs="0" name="cidade" type="xs:string"></xs:element>
+          <xs:element minOccurs="0" name="complemento" type="xs:string"></xs:element>
+          <xs:element minOccurs="0" name="email" type="xs:string"></xs:element>
+          <xs:element minOccurs="0" name="estado" type="xs:string"></xs:element>
+          <xs:element minOccurs="0" name="fone" type="xs:string"></xs:element>
+          <xs:element minOccurs="0" name="logradouro" type="xs:string"></xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="salvaAquisicao">
+    <xs:sequence>
+      <xs:element name="aquisicao" type="tns:aquisicaoDto"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="salvaAquisicaoResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="aquisicao" type="tns:aquisicaoDto"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="consultaVeiculo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="id" type="xs:int"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="consultaVeiculoResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="veiculo" type="tns:veiculoDto"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="veiculoDto">
+    <xs:complexContent>
+      <xs:extension base="tns:dto">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="id" type="xs:int"></xs:element>
+          <xs:element name="ano" type="xs:string"></xs:element>
+          <xs:element name="chassi" type="xs:string"></xs:element>
+          <xs:element name="especie" type="xs:string"></xs:element>
+          <xs:element name="marca" type="xs:string"></xs:element>
+          <xs:element name="modelo" type="xs:string"></xs:element>
+          <xs:element name="placa" type="xs:string"></xs:element>
+          <xs:element name="renavan" type="xs:string"></xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="listaFormasPagamentos">
+    <xs:sequence></xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="listaFormasPagamentosResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="formaPagamento" type="tns:formaPagamentoDto"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="deletaCliente">
+    <xs:sequence>
+      <xs:element name="id" type="xs:int"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="deletaClienteResponse">
+    <xs:sequence></xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="listaVeiculos">
+    <xs:sequence></xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="listaVeiculosResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="veiculo" type="tns:veiculoDto"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="consultaFuncionario">
+    <xs:sequence>
+      <xs:element name="id" type="xs:int"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="consultaFuncionarioResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="funcionario" type="tns:funcionarioDto"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="cancelaVenda">
+    <xs:sequence>
+      <xs:element name="venda" type="tns:vendaDto"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="cancelaVendaResponse">
+    <xs:sequence></xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="consultaCliente">
+    <xs:sequence>
+      <xs:element name="id" type="xs:int"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="consultaClienteResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="cliente" type="tns:clienteDto"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="consultaGastos">
+    <xs:sequence>
+      <xs:element name="aquisicao" type="tns:aquisicaoDto"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="consultaGastosResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="gasto" type="tns:gastoDto"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="salvarFornecedor">
+    <xs:sequence>
+      <xs:element name="fornecedor" type="tns:fornecedorDto"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="salvarFornecedorResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="fornecedor" type="tns:fornecedorDto"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="consultaGasto">
+    <xs:sequence>
+      <xs:element name="id" type="xs:int"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="consultaGastoResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="gasto" type="tns:gastoDto"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="autentica">
+    <xs:sequence>
+      <xs:element name="usuario" type="tns:usuario"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="autenticaResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="salvaVeiculo">
+    <xs:sequence>
+      <xs:element name="veiculo" type="tns:veiculoDto"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="salvaVeiculoResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="veiculo" type="tns:veiculoDto"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="consultaFornecedor">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="id" type="xs:int"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="consultaFornecedorResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="fornecedor" type="tns:fornecedorDto"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="consultaAquisicoesPorCliente">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="cliente" type="tns:clienteDto"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="consultaAquisicoesPorClienteResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="aquisicao" type="tns:aquisicaoDto"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="salvaGasto">
+    <xs:sequence>
+      <xs:element name="gasto" type="tns:gastoDto"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="salvaGastoResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="gasto" type="tns:gastoDto"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="salvaVenda">
+    <xs:sequence>
+      <xs:element name="venda" type="tns:vendaDto"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="salvaVendaResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="venda" type="tns:vendaDto"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="consultaVendasPorCliente">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="cliente" type="tns:clienteDto"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="consultaVendasPorClienteResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="venda" type="tns:vendaDto"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="listaAquisicoes">
+    <xs:sequence>
+      <xs:element name="dataInicial" type="xs:dateTime"></xs:element>
+      <xs:element name="dataFinal" type="xs:dateTime"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="listaAquisicoesResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="aquisicao" type="tns:aquisicaoDto"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="deletaFuncionario">
+    <xs:sequence>
+      <xs:element name="id" type="xs:int"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="deletaFuncionarioResponse">
+    <xs:sequence></xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="salvaCliente">
+    <xs:sequence>
+      <xs:element name="cliente" type="tns:clienteDto"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="salvaClienteResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="cliente" type="tns:clienteDto"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="situacaoAquisicao">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="OK"></xs:enumeration>
+      <xs:enumeration value="CANCELADO"></xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

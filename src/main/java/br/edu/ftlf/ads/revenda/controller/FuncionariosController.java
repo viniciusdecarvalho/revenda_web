@@ -10,16 +10,16 @@ import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.interceptor.IncludeParameters;
 import br.com.caelum.vraptor.validator.SimpleMessage;
 import br.com.caelum.vraptor.validator.Validator;
+import br.edu.ftlf.ads.revenda.dao.FuncionariosDao;
 import br.edu.ftlf.ads.revenda.model.Funcionario;
-import br.edu.ftlf.ads.revenda.model.Usuario;
-import br.edu.ftlf.ads.revenda.service.FuncionariosService;
+import br.edu.ftlf.ads.revenda.model.UsuarioWeb;
 
 @Controller
 public class FuncionariosController {
 
 	private final Result result;
 	private final Validator validator;
-	private final FuncionariosService funcionarios;
+	private final FuncionariosDao funcionariosDao;
 	
 	/**
 	 * cdi eyes 
@@ -30,10 +30,10 @@ public class FuncionariosController {
 	}
 	
 	@Inject
-	public FuncionariosController(Result result, Validator validator, FuncionariosService funcionariosService) {
+	public FuncionariosController(Result result, Validator validator, FuncionariosDao funcionariosService) {
 		this.result = result;
 		this.validator = validator;
-		this.funcionarios = funcionariosService;
+		this.funcionariosDao = funcionariosService;
 	}
 	
 	@Transactional
@@ -43,26 +43,26 @@ public class FuncionariosController {
 		validator.validate(funcionario)
 				 .onErrorUsePageOf(this).form();
 		
-		funcionarios.save(funcionario);
+		funcionariosDao.save(funcionario);
 		result.include("notice", "Funcionario salvo com sucesso.");
 		result.redirectTo(this).lista();
 	}
 	
 	@Get("funcionarios/detalhes/{id}")
 	public void detalhes(Integer id) {
-		result.include("funcionario", funcionarios.find(id));
+		result.include("funcionario", funcionariosDao.find(id));
 	}
 
 	@Get("funcionarios/deleta/{id}")
 	public void deleta(Integer id) {
-		result.include("funcionario", funcionarios.find(id));
+		result.include("funcionario", funcionariosDao.find(id));
 	}
 
 	@Transactional
 	@IncludeParameters
 	@Post("funcionarios/deleta")
 	public void deleta(Funcionario funcionario) {
-		funcionarios.delete(funcionario);
+		funcionariosDao.delete(funcionario);
 		result.include("notice", "Funcionario removido com sucesso.")
 			  .redirectTo(this).lista();
 	}
@@ -74,34 +74,34 @@ public class FuncionariosController {
 	
 	@Get("funcionarios/form/{id}")
 	public void form(Integer id) {
-		result.include("funcionario", funcionarios.find(id));
+		result.include("funcionario", funcionariosDao.find(id));
 	}
 	
 	@Get
 	public void lista() {
-		result.include("funcionarios", funcionarios.list());
+		result.include("funcionarios", funcionariosDao.list());
 	}
 	
 	@Get("funcionarios/{id}/editaLogin")
 	public void editaUsuario(Integer id) {
-		Funcionario funcionario = funcionarios.find(id);
+		Funcionario funcionario = funcionariosDao.find(id);
 		result.include("funcionario", funcionario);
 	}
 	
 	@Transactional
 	@IncludeParameters
 	@Post("funcionarios/{id}/salvaLogin")
-	public void salvaUsuario(Integer id, Usuario usuario) {
+	public void salvaUsuario(Integer id, UsuarioWeb usuario) {
 		validator.validate(usuario);
 		validator.onErrorUsePageOf(this).editaUsuario(id);
 		
 		validator.addIf(!usuario.getSenha().equals(usuario.getConfirmaSenha()), new SimpleMessage("senha", "A conformação da senha deve ser igual a senha" ));
 		validator.onErrorUsePageOf(this).editaUsuario(id);
 		
-		Funcionario funcionario = funcionarios.find(id);
+		Funcionario funcionario = funcionariosDao.find(id);
 		funcionario.redefineUsuario(usuario);
 		
-		funcionarios.save(funcionario);
+		funcionariosDao.save(funcionario);
 		
 		result.include("notice", "Senha alterada com sucesso!");
 		result.redirectTo(this).lista();

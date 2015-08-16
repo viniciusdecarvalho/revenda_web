@@ -5,7 +5,7 @@ import java.io.Serializable;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
-import br.edu.ftlf.ads.revenda.model.Usuario;
+import br.edu.ftlf.ads.revenda.model.UsuarioWeb;
 
 @SessionScoped
 @Named("userInfo")
@@ -13,13 +13,13 @@ public class UserInfo implements Serializable {
 
 	private static final long serialVersionUID = 2071309508582010813L;
 
-	private Usuario usuario;
+	private UsuarioWeb usuario;
 	
-	public Usuario getUsuario() {
+	public UsuarioWeb getUsuario() {
 		return usuario;
 	}
 	
-	public void setUsuario(Usuario usuario) {
+	public void setUsuario(UsuarioWeb usuario) {
 		this.usuario = usuario;
 	}
 	

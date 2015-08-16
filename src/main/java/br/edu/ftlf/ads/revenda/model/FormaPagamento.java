@@ -2,39 +2,30 @@ package br.edu.ftlf.ads.revenda.model;
 
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
 import org.hibernate.validator.constraints.NotEmpty;
 
-/**
- * The persistent class for the formaspagamentos database table.
- * 
- */
-@Entity
-@Table(name="formaspagamentos")
 public class FormaPagamento extends Model {
 	private static final long serialVersionUID = 1L;
 
 	public static final String PROPERTY_NOME = "nome";
 
-	@Column(nullable=false)
 	private boolean ativo;
 
-	@Column(nullable=false)
 	private boolean credito;
 
-	@Column(nullable=false)
 	private boolean debito;
 
 	@NotEmpty
-	@Column(nullable=false)
 	private String nome;
 
-	@OneToMany(mappedBy="formaPagamento")
 	private List<Pagamento> pagamentos;
+
+	public FormaPagamento() {
+	}
+	
+	public FormaPagamento(int id) {
+		setId(id);
+	}
 
 	public boolean isAtivo() {
 		return this.ativo;

@@ -2,19 +2,8 @@ package br.edu.ftlf.ads.revenda.model;
 
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
 import org.hibernate.validator.constraints.NotEmpty;
 
-/**
- * The persistent class for the veiculos database table.
- * 
- */
-@Entity
-@Table(name="veiculos")
 public class Veiculo extends Model {
 	private static final long serialVersionUID = 1L;
 
@@ -23,34 +12,26 @@ public class Veiculo extends Model {
 	public static final String PROPERTY_ANO = "ano";
 
 	@NotEmpty
-	@Column(nullable=false)
 	private String ano;
 
 	@NotEmpty
-	@Column(nullable=false)
 	private String chassi;
 
 	@NotEmpty
-	@Column(nullable=false)
 	private String especie;
 
 	@NotEmpty
-	@Column(nullable=false)
 	private String marca;
 
 	@NotEmpty
-	@Column(nullable=false)
 	private String modelo;
 
 	@NotEmpty
-	@Column(nullable=false)
 	private String placa;
 
 	@NotEmpty
-	@Column(nullable=false)
 	private String renavan;
 
-	@OneToMany(mappedBy="veiculo")
 	private List<Aquisicao> aquisicoes;
 
 	public Veiculo() {

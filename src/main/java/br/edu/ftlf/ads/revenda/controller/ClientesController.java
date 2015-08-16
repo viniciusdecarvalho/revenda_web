@@ -1,5 +1,7 @@
 package br.edu.ftlf.ads.revenda.controller;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 
@@ -9,15 +11,15 @@ import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.interceptor.IncludeParameters;
 import br.com.caelum.vraptor.validator.Validator;
+import br.edu.ftlf.ads.revenda.dao.ClientesDao;
 import br.edu.ftlf.ads.revenda.model.Cliente;
-import br.edu.ftlf.ads.revenda.service.ClientesService;
 
 @Controller
 public class ClientesController {
 
 	private final Result result;
 	private final Validator validator;
-	private final ClientesService clientesService;
+	private final ClientesDao clientesDao;
 	
 	/**
 	 * cdi eyes 
@@ -28,10 +30,10 @@ public class ClientesController {
 	}
 	
 	@Inject
-	public ClientesController(Result result, Validator validator, ClientesService clientesService) {
+	public ClientesController(Result result, Validator validator, ClientesDao clientesService) {
 		this.result = result;
 		this.validator = validator;
-		this.clientesService = clientesService;
+		this.clientesDao = clientesService;
 	}
 	
 	@Transactional
@@ -41,26 +43,26 @@ public class ClientesController {
 		validator.validate(cliente)
 				 .onErrorUsePageOf(this).form();
 		
-		clientesService.save(cliente);
+		clientesDao.save(cliente);
 		result.include("notice", "Cliente salvo com sucesso.");
 		result.redirectTo(this).lista();
 	}
 	
 	@Get("clientes/detalhes/{id}")
 	public void detalhes(Integer id) {
-		result.include("cliente", clientesService.find(id));
+		result.include("cliente", clientesDao.find(id));
 	}
 
 	@Get("clientes/deleta/{id}")
 	public void deleta(Integer id) {
-		result.include("cliente", clientesService.find(id));
+		result.include("cliente", clientesDao.find(id));
 	}
 
 	@Transactional
 	@IncludeParameters
-	@Post("clientes/deleta")
+	@Post("clientes/deleta/{id}")
 	public void deleta(Cliente cliente) {
-		clientesService.delete(cliente);
+		clientesDao.delete(cliente);
 		result.include("notice", "Cliente removido com sucesso.")
 			  .redirectTo(this).lista();
 	}
@@ -73,12 +75,13 @@ public class ClientesController {
 	
 	@Get("clientes/form/{id}")
 	public void form(Integer id) {
-		result.include("cliente", clientesService.find(id));
+		result.include("cliente", clientesDao.find(id));
 	}
 	
 	@Get("clientes/lista")
 	public void lista() {
-		result.include("clientes", clientesService.list());
+		List<Cliente> clientes = clientesDao.list();
+		result.include("clientes", clientes);
 	}
 	
 }

@@ -7,22 +7,23 @@ import javax.transaction.Transactional;
 
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Get;
+import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.interceptor.IncludeParameters;
 import br.com.caelum.vraptor.validator.I18nMessage;
 import br.com.caelum.vraptor.validator.Validator;
 import br.edu.ftlf.ads.revenda.conversation.Compra;
+import br.edu.ftlf.ads.revenda.dao.AquisicoesDao;
+import br.edu.ftlf.ads.revenda.dao.ClientesDao;
+import br.edu.ftlf.ads.revenda.dao.FormasPagamentosDao;
+import br.edu.ftlf.ads.revenda.dao.FuncionariosDao;
+import br.edu.ftlf.ads.revenda.dao.VeiculosDao;
 import br.edu.ftlf.ads.revenda.model.Aquisicao;
 import br.edu.ftlf.ads.revenda.model.Aquisicao.Combustivel;
 import br.edu.ftlf.ads.revenda.model.Enums.SituacaoAquisicao;
 import br.edu.ftlf.ads.revenda.model.Enums.TipoPagamento;
 import br.edu.ftlf.ads.revenda.model.Pagamento;
-import br.edu.ftlf.ads.revenda.service.AquisicoesService;
-import br.edu.ftlf.ads.revenda.service.ClientesService;
-import br.edu.ftlf.ads.revenda.service.FormasPagamentosService;
-import br.edu.ftlf.ads.revenda.service.FuncionariosService;
-import br.edu.ftlf.ads.revenda.service.VeiculosService;
 import br.edu.ftlf.ads.revenda.view.ClienteModelView;
 import br.edu.ftlf.ads.revenda.view.CompraModelView;
 import br.edu.ftlf.ads.revenda.view.VeiculoModelView;
@@ -33,11 +34,11 @@ public class AquisicoesController {
 	private final Result result;
 	private final Validator validator;
 	
-	private final AquisicoesService aquisicoesService;
-	private final FuncionariosService funcionariosService;
-	private final ClientesService clientesService;
-	private final VeiculosService veiculosService;
-	private final FormasPagamentosService formasPagamentosService;
+	private final AquisicoesDao aquisicoesDao;
+	private final FuncionariosDao funcionariosDao;
+	private final ClientesDao clientesDao;
+	private final VeiculosDao veiculosDao;
+	private final FormasPagamentosDao formasPagamentosDao;
 	
 	private final Compra compra;
 	
@@ -51,61 +52,63 @@ public class AquisicoesController {
 	
 	@Inject
 	public AquisicoesController(Result result, Validator validator, 
-								AquisicoesService aquisicoesService, 
-								FuncionariosService funcionariosService, 
-								ClientesService clientesService, 
-								VeiculosService veiculosService, 
-								FormasPagamentosService formasPagamentosService,
+								AquisicoesDao aquisicoesService, 
+								FuncionariosDao funcionariosService, 
+								ClientesDao clientesService, 
+								VeiculosDao veiculosService, 
+								FormasPagamentosDao formasPagamentosService,
 								Compra aquisicaoConversation) {
 		this.result = result;
 		this.validator = validator;
-		this.aquisicoesService = aquisicoesService;
-		this.funcionariosService = funcionariosService;
-		this.clientesService = clientesService;
-		this.veiculosService = veiculosService;
-		this.formasPagamentosService = formasPagamentosService;
+		this.aquisicoesDao = aquisicoesService;
+		this.funcionariosDao = funcionariosService;
+		this.clientesDao = clientesService;
+		this.veiculosDao = veiculosService;
+		this.formasPagamentosDao = formasPagamentosService;
 		this.compra = aquisicaoConversation;
 	}
 	
 	@Get("aquisicao/veiculo")
 	public void veiculo() {
 		compra.beginConversation();		
-		result.include("veiculos", veiculosService.list());
+		result.include("veiculos", veiculosDao.list());
 		result.include("combustiveis", Combustivel.values());
 	}
 		
 	@IncludeParameters
-	@Post("aquisicao/veiculo")
+	@Path(priority=Path.HIGHEST, value = { "aquisicao/veiculo" })
+	@Post
 	public void veiculo(VeiculoModelView veiculo) {
 		compra.registerConversation();
+		compra.setVeiculo(veiculo);
 		validator.validate(veiculo);
 		if (validator.hasErrors()) {
-			result.include("veiculos", veiculosService.list());
+			result.include("veiculos", veiculosDao.list());
 			result.include("combustiveis", Combustivel.values());
 			validator.onErrorUsePageOf(this).veiculo();
 		}
-		compra.setVeiculo(veiculo);
 		
-		result.include("clientes", clientesService.list());
-		result.include("vendedores", funcionariosService.getVendedores());
+		result.include("clientes", clientesDao.list());
+		result.include("vendedores", funcionariosDao.getVendedores());
 		result.of(this).cliente();
 	}
 	
 	@Get("aquisicao/cliente")
 	public void cliente() {
 		compra.registerConversation();
-		result.include("clientes", clientesService.list());
-		result.include("vendedores", funcionariosService.getVendedores());
+		result.include("clientes", clientesDao.list());
+		result.include("vendedores", funcionariosDao.getVendedores());
 	}
 	
 	@IncludeParameters
-	@Post("aquisicao/cliente")
+	@Path(priority=Path.HIGHEST, value = { "aquisicao/cliente" })
+	@Post
 	public void cliente(ClienteModelView cliente) {
 		compra.registerConversation();
 		validator.validate(cliente);
 		if (validator.hasErrors()) {
-			result.include("clientes", clientesService.list());
-			result.include("vendedores", funcionariosService.getVendedores());
+			result.include("clientes", clientesDao.list());
+			result.include("vendedores", funcionariosDao.getVendedores());
 			validator.onErrorUsePageOf(this).cliente();
 		}
 		compra.setCliente(cliente);
@@ -118,7 +121,8 @@ public class AquisicoesController {
 	}
 	
 	@IncludeParameters
-	@Post("aquisicao/compra")
+	@Post
+	@Path(priority=Path.HIGHEST, value = { "aquisicao/compra" })
 	public void compra(CompraModelView compra) {
 		validator.validate(compra)
 				 .onErrorUsePageOf(this).compra();
@@ -126,33 +130,31 @@ public class AquisicoesController {
 		this.compra.setCompra(compra);
 		this.compra.registerConversation();
 		
-		result.include("formasPagamentos", formasPagamentosService.list());
+		result.include("formasPagamentos", formasPagamentosDao.list());
 		result.of(this).pagamentos();
 	}
 	
 	@Get("aquisicao/pagamentos")
 	public void pagamentos() {		
 		compra.registerConversation();
-		result.include("formasPagamentos", formasPagamentosService.list());
+		result.include("formasPagamentos", formasPagamentosDao.list());
 	}
 	
-	@IncludeParameters
 	@Post("aquisicao/{aquisicao.id}/pagamento/salva")
 	public void salvaPagamento(Pagamento pagamento) {
 		compra.registerConversation();
 		
 		pagamento.setTipo(TipoPagamento.DEBITO);
 		Integer formaPagamentoId = pagamento.getFormaPagamento().getId();
-		pagamento.setFormaPagamento(formasPagamentosService.find(formaPagamentoId));
+		pagamento.setFormaPagamento(formasPagamentosDao.find(formaPagamentoId));
 		pagamento.setAquisicao(compra.getAquisicao());
 		
-		result.include("formasPagamentos", formasPagamentosService.list());
+		result.include("formasPagamentos", formasPagamentosDao.list());
 		validator.validate(pagamento)
 				 .onErrorUsePageOf(this).pagamentos();
 		
 		Aquisicao aquisicao = compra.getAquisicao();
 		aquisicao.addPagamento(pagamento);
-		
 		result.of(this).pagamentos();
 	}
 
@@ -170,11 +172,11 @@ public class AquisicoesController {
 		validator.addIf(validaPagamento(aquisicao), new I18nMessage("valor", "aquisicao.pagamentos.not.valid", aquisicao.getCustoTotal(), aquisicao.getValor()));
 		
 		if (validator.hasErrors()) {
-			result.include("formasPagamentos", formasPagamentosService.list());
+			result.include("formasPagamentos", formasPagamentosDao.list());
 			validator.onErrorUsePageOf(this).pagamentos();			
 		}				 
 		
-		aquisicoesService.save(aquisicao);
+		aquisicoesDao.save(aquisicao);
 		compra.endConversation();
 		result.include("notice", "Aquisicao salvo com sucesso.");
 		result.redirectTo(this).lista();
@@ -183,9 +185,10 @@ public class AquisicoesController {
 	@Get("aquisicao/removePagamento/{index}")
 	public void removePagamento(Integer index) {
 		List<Pagamento> pagamentos = compra.getAquisicao().getPagamentos();
-		pagamentos.remove(index);
+		pagamentos.remove(index -1);
+		compra.getAquisicao().setPagamentos(pagamentos);
 		result.include("notice", "pagamento removido com sucesso.");
-		result.include("formasPagamentos", formasPagamentosService.list());
+		result.include("formasPagamentos", formasPagamentosDao.list());
 		result.of(this).pagamentos();
 	}
 
@@ -193,19 +196,33 @@ public class AquisicoesController {
 		if (aquisicao.getPagamentos() != null && !aquisicao.getPagamentos().isEmpty()) {
 			double pagamentos = aquisicao.getCustoTotal().doubleValue();
 			double valor = aquisicao.getValor() != null ? aquisicao.getValor().doubleValue() : 0;
-			return pagamentos < valor;
+			return pagamentos != valor;
 		}
 		return false;
 	}
 
 	@Get("aquisicoes")
 	public void lista() {
-		result.include("aquisicoes", aquisicoesService.list());
+		List<Aquisicao> aquisicoes = aquisicoesDao.list();
+		result.include("aquisicoes", aquisicoes);
 	}
 	
 	@Get("aquisicao/{id}")
 	public void deleta(Integer id) {
-		result.include("aquisicao", aquisicoesService.find(id));
+		result.include("aquisicao", aquisicoesDao.find(id));
+	}
+	
+	@Post("aquisicao/{id}")
+	public void deleta(Aquisicao aquisicao) {
+		aquisicoesDao.delete(aquisicao);
+		result.include("notice", "Aquisicao removida com sucesso.")
+		  .redirectTo(this).lista();
+	}
+	
+	@Get("aquisicao/detalhes/{id}")
+	public void detalhes(Integer id) {
+		Aquisicao aquisicao = aquisicoesDao.find(id);
+		result.include("aquisicao", aquisicao);
 	}
 	
 }

@@ -44,7 +44,7 @@
                         <a href="${linkTo[AquisicoesController].lista}" ><i class="fa fa-arrow-down fa-fw"></i>${t['aquisicao.menu.cadastro']}</a>
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-arrow-up fa-fw"></i>Venda de Veiculos</a>
+                        <a href="${linkTo[VendasController].lista}"><i class="fa fa-arrow-up fa-fw"></i>Venda de Veiculos</a>
                     </li>                                
                 </ul>
             </li>                        

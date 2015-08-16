@@ -9,15 +9,15 @@ import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.interceptor.IncludeParameters;
 import br.com.caelum.vraptor.validator.Validator;
+import br.edu.ftlf.ads.revenda.dao.VeiculosDao;
 import br.edu.ftlf.ads.revenda.model.Veiculo;
-import br.edu.ftlf.ads.revenda.service.VeiculosService;
 
 @Controller
 public class VeiculosController {
 
 	private final Result result;
 	private final Validator validator;
-	private final VeiculosService veiculosService;
+	private final VeiculosDao veiculosDao;
 	
 	/**
 	 * cdi eyes 
@@ -28,10 +28,10 @@ public class VeiculosController {
 	}
 	
 	@Inject
-	public VeiculosController(Result result, Validator validator, VeiculosService veiculosService) {
+	public VeiculosController(Result result, Validator validator, VeiculosDao veiculosService) {
 		this.result = result;
 		this.validator = validator;
-		this.veiculosService = veiculosService;
+		this.veiculosDao = veiculosService;
 	}
 	
 	@Transactional
@@ -41,26 +41,26 @@ public class VeiculosController {
 		validator.validate(veiculo)
 				 .onErrorUsePageOf(this).form();
 		
-		veiculosService.save(veiculo);
+		veiculosDao.save(veiculo);
 		result.include("notice", "Veiculo salvo com sucesso.");
 		result.redirectTo(this).lista();
 	}
 	
 	@Get("veiculos/detalhes/{id}")
 	public void detalhes(Integer id) {
-		result.include("veiculo", veiculosService.find(id));
+		result.include("veiculo", veiculosDao.find(id));
 	}
 
 	@Get("veiculos/deleta/{id}")
 	public void deleta(Integer id) {
-		result.include("veiculo", veiculosService.find(id));
+		result.include("veiculo", veiculosDao.find(id));
 	}
 
 	@Transactional
 	@IncludeParameters
 	@Post("veiculos/deleta")
 	public void deleta(Veiculo veiculo) {
-		veiculosService.delete(veiculo);
+		veiculosDao.delete(veiculo);
 		result.include("notice", "Veiculo removido com sucesso.")
 			  .redirectTo(this).lista();
 	}
@@ -72,12 +72,12 @@ public class VeiculosController {
 	
 	@Get("veiculos/form/{id}")
 	public void form(Integer id) {
-		result.include("veiculo", veiculosService.find(id));
+		result.include("veiculo", veiculosDao.find(id));
 	}
 	
 	@Get
 	public void lista() {
-		result.include("veiculos", veiculosService.list());
+		result.include("veiculos", veiculosDao.list());
 	}
 	
 }
